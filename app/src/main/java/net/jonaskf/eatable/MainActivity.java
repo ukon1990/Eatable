@@ -22,7 +22,10 @@ import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import javax.xml.transform.Result;
 
@@ -43,8 +46,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String json = "";
-        JSONObject obj = new JSONObject();
+        String json = GetFromAPI.getURL("http://frigg.hiof.no/android_v165/api.php");
+        System.out.println("SWAG YO!= " + json);
 
         //Starting the search fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), _scan_fragment).commit();
