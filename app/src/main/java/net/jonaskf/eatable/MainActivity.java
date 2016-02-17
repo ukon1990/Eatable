@@ -22,6 +22,8 @@ import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
+import org.json.JSONObject;
+
 import javax.xml.transform.Result;
 
 public class MainActivity extends AppCompatActivity
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        String json = "";
+        JSONObject obj = new JSONObject();
 
         //Starting the search fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), _scan_fragment).commit();

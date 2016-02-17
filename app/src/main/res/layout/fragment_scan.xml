@@ -5,7 +5,6 @@
     tools:context="net.jonaskf.eatable.ScanFragment"
     android:foreground="#000000">
 
-    <!-- TODO: Fix sånn at jeg slepper å bruke marginTop -->
     <com.journeyapps.barcodescanner.CompoundBarcodeView
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
