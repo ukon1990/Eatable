@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String json = GetFromAPI.getURL("http://frigg.hiof.no/android_v165/api.php");
-        System.out.println("SWAG YO!= " + json);
+        //String json = GetFromAPI.getURL("http://frigg.hiof.no/android_v165/api.php");
+        //System.out.println("SWAG YO!= " + json);
+        GetFromAPI.urlText();
 
         //Starting the search fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), _scan_fragment).commit();
