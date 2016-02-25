@@ -1,11 +1,9 @@
-package net.jonaskf.eatable;
+package net.jonaskf.eatable.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,19 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.CaptureManager;
-import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.jonaskf.eatable.GetFromAPI;
+import net.jonaskf.eatable.Product;
+import net.jonaskf.eatable.R;
 
-import java.io.IOException;
-
-import javax.xml.transform.Result;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     private final String _scan_fragment = "scan fragment";
     private final String _result_fragment = "result fragment";
 
-    public static String ean = "N/A";
+    public static String ean = "5000112595543";//TODO: Husk å sett denne tilbake til N/A ellnst.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +39,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //String json = GetFromAPI.getURL("http://frigg.hiof.no/android_v165/api.php");
-        //System.out.println("SWAG YO!= " + json);
-        GetFromAPI.urlText();
 
         //Starting the search fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), _scan_fragment).commit();
@@ -72,6 +62,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //TODO: HashMap<String, Product> hm = GetFromAPI.getStations(GetFromAPI.testArrayInput);
+        /*
+        for(String key : hm.keySet()){
+            Log.d("Product", hm.get(key).getName() + " has " + hm.get(key).getIngredients().size() + " ingredients.");
+        }*/
     }
 
     @Override
@@ -145,7 +141,7 @@ public class MainActivity extends AppCompatActivity
                 //TODO: Add try catch
                 ean = result.getContents();
                 Log.d("onActivityResult", ean);
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commit();
             }
         }
     }

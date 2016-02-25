@@ -1,4 +1,4 @@
-package net.jonaskf.eatable;
+package net.jonaskf.eatable.gui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

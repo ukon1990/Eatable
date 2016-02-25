@@ -1,15 +1,42 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.jonaskf.eatable.ResultFragment">
+    tools:context=".gui.ResultFragment"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:background="#ffffff">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/product_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Result fragment" />
+        android:layout_height="wrap_content"
+        android:text="Result fragment"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/abc_text_size_headline_material" />
+    <TextView
+        android:id="@+id/product_acceptance"
+        android:layout_below="@id/product_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/function_not_yet_implemented"
+        />
+    <TextView
+        android:id="@+id/ingredient_title_textview"
+        android:layout_below="@id/product_acceptance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/ingredient_header_text"
+        android:textSize="@dimen/abc_text_size_large_material" />
+    <TextView
+        android:id="@+id/ingredient_list"
+        android:layout_below="@id/ingredient_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp" />
 
-</FrameLayout>
+</RelativeLayout>

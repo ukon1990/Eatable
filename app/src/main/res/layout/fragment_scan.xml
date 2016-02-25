@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.jonaskf.eatable.ScanFragment"
-    android:foreground="#000000">
+    tools:context=".gui.ScanFragment">
 
     <com.journeyapps.barcodescanner.CompoundBarcodeView
         android:layout_marginTop="?attr/actionBarSize"

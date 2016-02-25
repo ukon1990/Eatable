@@ -2,12 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.jonaskf.eatable.SearchFragment">
+    tools:context=".gui.SearchFragment"
+    android:background="#ffffff"
+    android:layout_marginTop="?attr/actionBarSize">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <SearchView
+        android:id="@+id/searchBox"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Search fragment" />
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
