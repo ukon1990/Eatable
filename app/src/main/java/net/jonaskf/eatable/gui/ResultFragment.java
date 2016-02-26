@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
+import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Source;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 
 /**
@@ -36,6 +39,7 @@ public class ResultFragment extends Fragment {
     private View view;
     private TextView productTitleTextView; //For product name
     private TextView productIngredients; //For the product ingredients
+    private TextView productAllergens;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class ResultFragment extends Fragment {
         Log.d("Test", MainActivity.ean);
         productTitleTextView = ((TextView) view.findViewById(R.id.product_title));
         productIngredients = ((TextView) view.findViewById(R.id.ingredient_list));
+        productAllergens = ((TextView) view.findViewById(R.id.product_acceptance));
         //((TextView) inflater.inflate(R.layout.fragment_result, container, false).findViewById(R.id.textView)).setText("Random");
 
 
@@ -56,7 +61,7 @@ public class ResultFragment extends Fragment {
 
     public void getProductData (String ean){
         DownloadFileTask download = new DownloadFileTask();
-        String url = "http://frigg.hiof.no/android_v165/api.php?ean=" + ean;
+        String url = "http://frigg.hiof.no/android_v165/GetProducts.php?ean=" + ean;
         download.execute(url);
     }
 
@@ -64,21 +69,64 @@ public class ResultFragment extends Fragment {
         String eanCode ="";
         String productName ="";
         String ingredients ="";
+        String allergenText = "";
         JSONArray ingredientList;
+
+        HashMap<Integer, String> allergens = new HashMap<>();
         try {
             eanCode = jsonObject.getString("ean");
             productName = jsonObject.getString("productName");
             ingredientList = jsonObject.getJSONArray("ingredients");
 
             for(int i = 0; i < ingredientList.length(); i++){
-                ingredients += ((JSONObject)ingredientList.get(i)).getString("name") + "(Source: " + ((JSONObject)ingredientList.get(i)).getString("sourceID") + ")\n";
+                if(i == 0){
+                    //Adding the first ingredient
+                    ingredients += ((JSONObject)ingredientList.get(i)).getString("name").toUpperCase().subSequence(0,1)
+                                    + ((JSONObject)ingredientList.get(i)).getString("name").substring(1);
+                }else if(i == ingredientList.length()-1){
+                    //Adding the last
+                   ingredients += " og " + ((JSONObject)ingredientList.get(i)).getString("name") + ".";
+                }else{
+                    ingredients += ", " + ((JSONObject)ingredientList.get(i)).getString("name");
+                }
+
+                if(
+                        !allergens.containsKey(((JSONObject) ingredientList.get(i)).getInt("allergenid"))
+                                && ((JSONObject)ingredientList.get(i)).getInt("allergenid") != 0
+                ){
+                    allergens.put(
+                            ((JSONObject)ingredientList.get(i)).getInt("allergenid"),
+                            Allergen.list.get(((JSONObject)ingredientList.get(i)).getInt("allergenid")).getAllergen()
+
+                    );
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        productTitleTextView.setText(productName + "(" + eanCode + ")");
+        //Listing up all the ingredients
+        int c = allergens.size();
+        for(Integer i : allergens.keySet()){
+            if(c == allergens.size()){
+                allergenText += allergens.get(i).toUpperCase().substring(0,1) + allergens.get(i).substring(1);
+                Log.d("test", c + "/" + allergens.size());
+            }else if(c == 1){
+                allergenText += " og " + allergens.get(i) + ".";
+                Log.d("test", c + "/" + allergens.size());
+            }else {
+                allergenText += ", " + allergens.get(i);
+                Log.d("test", c + "/" + allergens.size());
+            }
+            c--;
+        }
+        productTitleTextView.setText(productName + "\n" + eanCode);
         productIngredients.setText(ingredients);
+        if(allergens.size() > 0){
+            productAllergens.setText(allergenText);
+        }
         Log.d("product", eanCode + "(" + productName + ")");
+        allergens.clear();
+
     }
 
     public void updateText(String text){

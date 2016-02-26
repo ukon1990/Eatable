@@ -69,4 +69,6 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="function_not_yet_implemented">Denne funksjonen er ikke implementert enda.</string>
     <string name="ingredient_header_text">Innhold:</string>
+    <string name="allergic_result">Produktet er trygt å konsumere.</string>
+    <string name="allergic_title">Allergener:</string>
 </resources>

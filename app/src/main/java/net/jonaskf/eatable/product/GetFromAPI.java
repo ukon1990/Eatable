@@ -1,4 +1,4 @@
-package net.jonaskf.eatable;
+package net.jonaskf.eatable.product;
 
 
 import android.os.AsyncTask;
@@ -9,14 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -34,67 +30,6 @@ public class GetFromAPI {
         return obj;
     }
 
-    public static  HashMap<String, Product> getStations(String json){
-        HashMap<String, Product> products = new HashMap<>();
-        JSONArray jsonArray;
-        try{
-            jsonArray= new JSONArray(json);
-            for(int i= 0; i < jsonArray.length() - 1; i++){
-                JSONObject obj = new JSONObject(jsonArray.get(i).toString());
-                HashMap<String, Ingredient> ingredients = new HashMap<>();
-
-                //adding products to the product list and assembling results from API query
-                if(!products.containsKey(obj.getString("productID"))){
-                    ingredients.put(
-                            String.valueOf(ingredients.size()),
-                            new Ingredient(
-                                    String.valueOf(ingredients.size()),
-                                    obj.getString("name"),
-                                    obj.getString("sourceID"),
-                                    obj.getString("typeID")
-                            )
-                    );
-                    products.put(
-                            obj.getString("productID"),
-                            new Product(
-                                    obj.getString("productID"),
-                                    obj.getString("productName"),
-                                    (HashMap<String, Ingredient>)ingredients.clone()
-                            )
-                    );
-                }else{
-                    //Replacing the old product with a new one with the extra ingredients
-                    Product product = products.get(obj.getString("productID"));
-                    HashMap<String, Ingredient> _ingredients = product.getIngredients();
-                    _ingredients.put(
-                            String.valueOf(ingredients.size()),
-                            new Ingredient(
-                                    String.valueOf(ingredients.size()),
-                                    obj.getString("name"),
-                                    obj.getString("sourceID"),
-                                    obj.getString("typeID")
-                            ));
-                    products.remove(obj.getString("productID"));
-                    products.put(
-                            product.getId(),
-                            new Product(
-                                    product.getId(),
-                                    product.getName(),
-                                    (HashMap<String, Ingredient>)_ingredients.clone()
-                            )
-                    );
-
-                    //Cleaning the hashmap
-                    _ingredients.clear();
-
-                }
-                ingredients.clear();
-            }
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
-        return products;
-    }
 
     //Async to allow download on a thread other than main thread
     private class DownloadFileTask extends AsyncTask<String, Integer, JSONObject> {
