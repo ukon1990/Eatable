@@ -1,6 +1,8 @@
 package net.jonaskf.eatable.gui;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,7 +64,7 @@ public class ResultFragment extends Fragment {
     public void getProductData (String ean){
         DownloadFileTask download = new DownloadFileTask();
         String url = "http://frigg.hiof.no/android_v165/GetProducts.php?ean=" + ean;
-        download.execute(url);
+        download.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
     }
 
     private void getJsonObject(JSONObject jsonObject){
@@ -137,6 +139,7 @@ public class ResultFragment extends Fragment {
     private class DownloadFileTask extends AsyncTask<String, Integer, JSONObject> {
         @Override
         protected JSONObject doInBackground(String... urls) {
+            Log.d("Download", "Start");
             URLConnection uConn;
             try{
                 Log.d("Download", "Started!");
@@ -152,7 +155,12 @@ public class ResultFragment extends Fragment {
                 //String obj ="";
                 JSONObject obj = new JSONObject();
                 try {
-                    obj= new JSONObject(in.readLine());
+                    String line;
+                    //Log.d("Download", "Read: " + in.read() + " contets: " + in.readLine());
+                    //TODO: Løs uten bruk av string om mulig (For veldig store lister)
+                    while((line = in.readLine()) != null)
+                        obj= new JSONObject(line);
+
                     Log.d("Download", "Not failed");
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -164,12 +172,32 @@ public class ResultFragment extends Fragment {
                 ex.printStackTrace();
                 Log.d("Download", "Failed! :(");
             }
+            Log.d("Download", "End");
             return null;
         }
 
         protected void onPostExecute(JSONObject result){
-            //TODO: Open file
-            getJsonObject(result);
+            //Checking if there was a result or not
+            if(!result.isNull("ean")){
+                getJsonObject(result);
+            }else{
+                //Opening a dialog box if product don't exsist in DB
+                new AlertDialog.Builder(getContext())
+                        .setTitle(MainActivity.ean)//R.string.product_does_not_exist_title)
+                        .setMessage(R.string.product_does_not_exist_msg)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int which){
+                                //Logic
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Logic
+                            }
+                        })
+                        .setIcon(R.drawable.ic_menu_manage)
+                        .show();
+            }
         }
     }
 }

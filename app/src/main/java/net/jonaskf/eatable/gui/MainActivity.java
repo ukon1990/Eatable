@@ -1,6 +1,7 @@
 package net.jonaskf.eatable.gui;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -51,11 +52,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Starting the search fragment
+        //Starting the scan page fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), _scan_fragment).commit();
 
         final IntentIntegrator intentIntegrator = new IntentIntegrator(this);
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 //Initiating scan if pressed
-                intentIntegrator.initiateScan();
+                intentIntegrator.setOrientationLocked(true).initiateScan();
             }
         });
 
@@ -137,14 +139,10 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScanFragment(), _scan_fragment).addToBackStack(null).commit();
         } else if (id == R.id.nav_manual) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), _search_fragment).addToBackStack(null).commit();
-        } else if (id == R.id.nav_settings) {
-            //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(), _search_fragment).addToBackStack(null).commit();
-            Log.d("onNavigation", ean);
+        } else if(id == R.id.nav_show_result){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commit();
-
-
-
-            //startActivityForResult(new Intent(this, SettingsActivity.class), 1);
+        }else if (id == R.id.nav_settings) {
+            startActivityForResult(new Intent(this, SettingsActivity.class), 1);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,7 +162,7 @@ public class MainActivity extends AppCompatActivity
                 ean = result.getContents();
                 Log.d("onActivityResult", ean);
                 try{
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commitAllowingStateLoss();
                 }catch(Exception e){
                     Log.d("scan result", "failed :(", e);
                     e.printStackTrace();

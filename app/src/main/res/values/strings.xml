@@ -71,4 +71,12 @@
     <string name="ingredient_header_text">Innhold:</string>
     <string name="allergic_result">Produktet er trygt å konsumere.</string>
     <string name="allergic_title">Allergener:</string>
+    <string name="show_result">Vis sist scannede produkt</string>
+    <string name="manual_search">Manuelt søk</string>
+    <string name="scan_product">Skann produkt</string>
+    <string name="settings">Instillinger</string>
+    <string name="product_does_not_exist_title">Produktet finnes ikke</string>
+    <string name="product_does_not_exist_msg">Dette produktet eksisterer ikke i databasen. Ønsker du å legge det til?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nei</string>
 </resources>
