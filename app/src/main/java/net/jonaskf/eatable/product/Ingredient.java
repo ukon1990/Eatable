@@ -1,5 +1,9 @@
 package net.jonaskf.eatable.product;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -33,5 +37,21 @@ public class Ingredient {
 
     public String getTypeID() {
         return typeID;
+    }
+
+    public HashMap<Integer, Ingredient> addIngredients(JSONArray array){
+        HashMap<Integer, Ingredient> ingredients = new HashMap<>();
+        for(int i = 0; i < array.length(); i++){
+            /*try{
+                JSONObject obj = ((JSONObject)array[i]);
+                ingredients.put(
+                        1,
+                        new Ingredient(
+
+                        )
+                );
+            }catch (JSONException e){e.printStackTrace();}*/
+        }
+        return ingredients;
     }
 }

@@ -1,5 +1,8 @@
 package net.jonaskf.eatable.product;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 /**
@@ -39,4 +42,19 @@ public class Product {
         return ingredients;
     }
 
+    public static void addProduct(JSONObject obj){
+        HashMap<Integer, Ingredient> ingredients = new HashMap<>();
+        try{
+            new Product(
+                    obj.getString("ean"),
+                    obj.getString("productName"),
+                    obj.getString("comment"),
+                    ingredients
+
+            );
+        }catch(JSONException e){e.printStackTrace();}
+    }
+    public static void addProducts(JSONObject obj){
+
+    }
 }
