@@ -1,5 +1,7 @@
 package net.jonaskf.eatable.product;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,13 +18,19 @@ public class Ingredient {
     private String typeID;
     private String allergenID;
 
-    public Ingredient(String name, String comment, String sourceID, String typeID) {
+
+
+    public Ingredient(String name, String comment, String sourceID, String typeID, String allergenID) {
         this.name = name;
         this.comment = comment;
         this.sourceID = sourceID;
         this.typeID = typeID;
+        this.allergenID = allergenID;
     }
 
+    public String getAllergenID() {
+        return allergenID;
+    }
     public String getName() {
         return name;
     }
@@ -39,19 +47,24 @@ public class Ingredient {
         return typeID;
     }
 
-    public HashMap<Integer, Ingredient> addIngredients(JSONArray array){
+    public static HashMap<Integer, Ingredient> addIngredients(JSONObject product){
         HashMap<Integer, Ingredient> ingredients = new HashMap<>();
-        for(int i = 0; i < array.length(); i++){
-            /*try{
-                JSONObject obj = ((JSONObject)array[i]);
+        try{
+            for(int i = 0; i < product.getJSONArray("ingredients").length(); i++){
+                JSONObject obj = ((JSONObject)product.getJSONArray("ingredients").get(i));
                 ingredients.put(
-                        1,
+                        obj.getInt("ingredientID"),
                         new Ingredient(
-
+                                obj.getString("name"),
+                                obj.getString("comment"),
+                                obj.getString("sourceID"),
+                                obj.getString("typeID"),
+                                obj.getString("allergenid")
                         )
                 );
-            }catch (JSONException e){e.printStackTrace();}*/
-        }
+                Log.d("Ingredient: ", obj.toString());
+            }
+        }catch (JSONException e){e.printStackTrace();}
         return ingredients;
     }
 }

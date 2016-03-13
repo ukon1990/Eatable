@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Product;
 import net.jonaskf.eatable.product.Source;
 
 import org.json.JSONArray;
@@ -26,6 +28,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -67,6 +70,62 @@ public class ResultFragment extends Fragment {
         download.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
     }
 
+    private void getProduct(JSONObject obj){
+        String ean = MainActivity.ean;
+        String allergenText = "";
+        String ingredientText ="";
+        HashMap<Integer, String> allergens = new HashMap<>();
+        int i = 0;
+        if(!Product.list.containsKey(ean)){
+            Product.addProduct(obj);
+            try{
+                Log.d("Product", obj.toString());
+            }catch(Exception e){e.printStackTrace();}
+        }
+        //Building ingredient string
+        for(int key : Product.list.get(ean).getIngredients().keySet()){
+            if(i == 0){
+                //Adding the first ingredient
+                ingredientText += Product.list.get(ean).getIngredients().get(key).getName().toUpperCase().subSequence(0,1)
+                        + Product.list.get(ean).getIngredients().get(key).getName().substring(1);
+            }else if(i == Product.list.get(ean).getIngredients().size()-1){
+                //Adding the last
+                ingredientText += " og " + Product.list.get(ean).getIngredients().get(key).getName() + ".";
+            }else{
+                ingredientText += ", " + Product.list.get(ean).getIngredients().get(key).getName();
+            }
+            i++;
+            //Building list of found allergens in this product
+            if(!allergens.containsKey(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()))){
+                allergens.put(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()), Allergen.list.get(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID())).getAllergen());
+            }
+
+        }
+        //Building allergen string
+        if(allergens.size() != 0){
+            int c = allergens.size();
+            for(Integer a : allergens.keySet()){
+                if(a != 0){
+                    if(c == allergens.size()){
+                        allergenText += allergens.get(a).toUpperCase().substring(0,1) + allergens.get(a).substring(1) + (c == 1 ? ".":"");
+                    }else if(c == 1){
+                        allergenText += " og " + allergens.get(a) + ".";
+                    }else {
+                        allergenText += ", " + allergens.get(a);
+                    }
+                    c--;
+                }
+            }
+            allergens.clear();
+        }
+        //Setting text label content
+        productTitleTextView.setText(Product.list.get(ean).getName());
+        if(allergenText.length()>0){
+            productAllergens.setText(allergenText);
+        }
+        productIngredients.setText(ingredientText);
+    }
+
     private void getJsonObject(JSONObject jsonObject){
         String eanCode ="";
         String productName ="";
@@ -106,7 +165,7 @@ public class ResultFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //Listing up all the ingredients
+        //Listing up all the allergens
         int c = allergens.size();
         for(Integer i : allergens.keySet()){
             if(c == allergens.size()){
@@ -142,7 +201,7 @@ public class ResultFragment extends Fragment {
             Log.d("Download", "Start");
             URLConnection uConn;
             try{
-                Log.d("Download", "Started!");
+                Log.d("Download", "Started! - " + urls);
                 //Getting that data
                 String result ="";
                 URL url = new URL(urls[0]);
@@ -179,7 +238,8 @@ public class ResultFragment extends Fragment {
         protected void onPostExecute(JSONObject result){
             //Checking if there was a result or not
             if(!result.isNull("ean")){
-                getJsonObject(result);
+                getProduct(result);
+                //getJsonObject(result);
             }else{
                 //Opening a dialog box if product don't exsist in DB
                 new AlertDialog.Builder(getContext())
