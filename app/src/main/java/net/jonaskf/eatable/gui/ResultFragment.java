@@ -66,7 +66,7 @@ public class ResultFragment extends Fragment {
 
     public void getProductData (String ean){
         DownloadFileTask download = new DownloadFileTask();
-        String url = "http://frigg.hiof.no/android_v165/GetProducts.php?ean=" + ean;
+        String url = "http://frigg.hiof.no/android_v165/api/GetProducts.php?ean=" + ean;
         download.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
     }
 

@@ -20,6 +20,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import net.jonaskf.eatable.R;
+import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -92,6 +94,19 @@ public class MainActivity extends AppCompatActivity
         getAllAllergens();
         getAllSources();
         getAllTypes();
+
+        /**
+         * Diet
+         */
+
+        Diet.list.put(
+                "1",
+                new Diet(
+                "Gluten allergi",
+                new HashMap<String, Source>(),
+                new HashMap<String, Type>(),
+                new HashMap<String, Allergen>()
+        ));
     }
 
     @Override
@@ -176,15 +191,15 @@ public class MainActivity extends AppCompatActivity
      */
     public void getAllAllergens(){
         DownloadAllergen dl = new DownloadAllergen();
-        dl.execute("http://frigg.hiof.no/android_v165/GetAllergens.php");
+        dl.execute("http://frigg.hiof.no/android_v165/api/GetAllergens.php");
     }
     public void getAllSources(){
         DownloadSources dl = new DownloadSources();
-        dl.execute("http://frigg.hiof.no/android_v165/GetSources.php");
+        dl.execute("http://frigg.hiof.no/android_v165/api/GetSources.php");
     }
     public void getAllTypes(){
         DownloadTypes dl = new DownloadTypes();
-        dl.execute("http://frigg.hiof.no/android_v165/GetTypes.php");
+        dl.execute("http://frigg.hiof.no/android_v165/api/GetTypes.php");
     }
 
     //Allergens
