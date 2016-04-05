@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
+import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Product;
 import net.jonaskf.eatable.product.Source;
@@ -97,7 +98,10 @@ public class ResultFragment extends Fragment {
             }
             i++;
             //Building list of found allergens in this product
-            if(!allergens.containsKey(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()))){
+            if(
+                    !allergens.containsKey(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()))
+                    && !Diet.allAllergens.containsKey(key)
+                    ){
                 allergens.put(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()), Allergen.list.get(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID())).getAllergen());
             }
 

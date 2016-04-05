@@ -20,6 +20,11 @@ public class Diet {
     private HashMap<String, Type> type = new HashMap<>();
     private HashMap<String, Allergen> allergen = new HashMap<>();
 
+    //Public lists
+    public static HashMap<String, Source> allSources = new HashMap<>();
+    public static HashMap<String, Type> allTypes = new HashMap<>();
+    public static HashMap<String, Allergen> allAllergens = new HashMap<>();
+
     //A list for getting and inserting data to the list of diets
     public static HashMap<String, Diet> list = new HashMap<>();
 
@@ -28,12 +33,27 @@ public class Diet {
         this.source = source;
         this.type = type;
         this.allergen = allergen;
+
+        //Adding to all sources list
+        for(String key : source.keySet())
+            if(!allSources.containsKey(key))
+                allSources.put(key, source.get(key));
+        //Adding to all types
+        for(String key : type.keySet())
+            if(!allTypes.containsKey(key))
+                allTypes.put(key, type.get(key));
+        //Adding to all allergens
+        for(String key : allergen.keySet())
+            if(!allAllergens.containsKey(key))
+                allAllergens.put(key, allergen.get(key));
+
     }
 
     public static void getAllDiets(){
         //Temp version of the method
 
     }
+
 
     public String getDiet() {
         return diet;
