@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity
         getAllAllergens();
         getAllSources();
         getAllTypes();
+        Diet.getAllDiets();
 
         /**
          * Diet

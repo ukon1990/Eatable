@@ -30,6 +30,11 @@ public class Diet {
         this.allergen = allergen;
     }
 
+    public static void getAllDiets(){
+        //Temp version of the method
+
+    }
+
     public String getDiet() {
         return diet;
     }
