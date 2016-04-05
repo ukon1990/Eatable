@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         final IntentIntegrator intentIntegrator = new IntentIntegrator(this);
         //Floating scan button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +99,9 @@ public class MainActivity extends AppCompatActivity
 
         /**
          * Diet
+         *
+         * Adding temporary diet for the user for now
+         * TODO: Add to database along with some others
          */
 
         Diet.list.put(
@@ -105,8 +109,14 @@ public class MainActivity extends AppCompatActivity
                 new Diet(
                 "Gluten allergi",
                 new HashMap<String, Source>(),
-                new HashMap<String, Type>(),
-                new HashMap<String, Allergen>()
+                new HashMap<String, Type>(){{
+                    put("9", Type.list.get("9"));
+
+                }},
+                new HashMap<String, Allergen>(){{
+                    put("5", Allergen.list.get("5"));
+
+                }}
         ));
     }
 

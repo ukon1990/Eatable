@@ -71,6 +71,7 @@ public class ResultFragment extends Fragment {
     }
 
     private void getProduct(JSONObject obj){
+        boolean isEatable = true;
         String ean = MainActivity.ean;
         String allergenText = "";
         String ingredientText ="";
