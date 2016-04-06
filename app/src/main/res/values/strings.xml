@@ -79,4 +79,5 @@
     <string name="product_does_not_exist_msg">Dette produktet eksisterer ikke i databasen. Ønsker du å legge det til?</string>
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
+    <string name="my_diets">Mine dietter</string>
 </resources>

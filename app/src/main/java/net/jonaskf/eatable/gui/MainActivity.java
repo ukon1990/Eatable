@@ -21,6 +21,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.diet.Diet;
+import net.jonaskf.eatable.global.Lists;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         //Floating scan button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +72,6 @@ public class MainActivity extends AppCompatActivity
              * Adding temporary diet for the user for now
              * TODO: Add to database along with some others
              */
-
 
             try{
                 Diet.list.put(
@@ -116,7 +117,8 @@ public class MainActivity extends AppCompatActivity
         getAllAllergens();
         getAllSources();
         getAllTypes();
-        Diet.getAllDiets();
+        getAllDietsList();
+        //Diet.getAllDiets();
     }
 
     @Override
@@ -166,8 +168,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).addToBackStack(null).commit();
         } else if(id == R.id.nav_show_result){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commit();
-        }else if (id == R.id.nav_settings) {
-            startActivityForResult(new Intent(this, SettingsActivity.class), 1);
+        }else if (id == R.id.diet_settings) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -210,6 +212,10 @@ public class MainActivity extends AppCompatActivity
     public void getAllTypes(){
         DownloadTypes dl = new DownloadTypes();
         dl.execute("http://frigg.hiof.no/android_v165/api/GetTypes.php");
+    }
+    public void getAllDietsList(){
+        DownloadDiets dl = new DownloadDiets();
+        dl.execute("http://frigg.hiof.no/android_v165/api/GetDiets.php");
     }
 
     //Allergens
@@ -339,6 +345,49 @@ public class MainActivity extends AppCompatActivity
                     Type.list.put(
                             ((JSONObject) jArr.get(i)).getString("typeID"),
                             new Type(((JSONObject) jArr.get(i)).getString("ingredientType"))
+                    );
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+        }
+    }
+    //Diets
+    private class DownloadDiets extends AsyncTask<String, Integer, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(String... urls) {
+            URLConnection uConn;
+            try{
+                //Getting that data
+                URL url = new URL(urls[0]);
+                uConn = url.openConnection();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(uConn.getInputStream(), "UTF-8")
+                );
+
+                JSONArray obj = new JSONArray();
+                try {
+                    obj= new JSONArray(in.readLine());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                in.close();
+                return obj;
+            }catch(IOException ex){
+                ex.printStackTrace();
+                Log.d("Download", "Failed! :(");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONArray result){
+            Type.list.clear();
+            //populating
+            JSONArray jArr = result;
+            for(int i = 0; i < jArr.length(); i++)
+                try {
+                    Lists.dietList.put(
+                            ((JSONObject) jArr.get(i)).getString("dietID"),
+                            ((JSONObject) jArr.get(i)).getString("diet")
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();

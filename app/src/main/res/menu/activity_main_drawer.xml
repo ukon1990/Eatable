@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_scan"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@mipmap/ic_scan"
             android:title="@string/scan_product" />
         <item
             android:id="@+id/nav_manual"
@@ -15,9 +15,9 @@
             android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
             android:title="@string/show_result" />
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/diet_settings"
             android:icon="@drawable/ic_menu_manage"
-            android:title="@string/settings" />
+            android:title="@string/my_diets" />
     </group>
 
 </menu>

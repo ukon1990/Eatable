@@ -12,4 +12,5 @@ public class Vars {
     public static final String _SCAN_FRAGMENT = "scan fragment";
     public static final String _RESULT_FRAGMENT = "result fragment";
     public static final String _ADD_PRODUCT_FRAGMENT = "add product fragment";
+    public static final String _MY_DIETS_FRAGMENT = "my diets fragment";
 }

@@ -251,7 +251,7 @@ public class ResultFragment extends Fragment {
                         .setMessage(R.string.product_does_not_exist_msg)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int which){
-                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._ADD_PRODUCT_FRAGMENT).addToBackStack(null).commit();
+                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddProductFragment(), Vars._ADD_PRODUCT_FRAGMENT).addToBackStack(null).commit();
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
