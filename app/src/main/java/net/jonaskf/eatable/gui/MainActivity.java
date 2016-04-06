@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity
      * GetAllergens.php - http://frigg.hiof.no/android_v165/GetAllergens.php
      * GetSoruces.php - http://frigg.hiof.no/android_v165/GetSources.php
      * GetTypes.php - http://frigg.hiof.no/android_v165/GetTypes.php
+     *
+     * Barcode generator: https://www.gs1.ch/en/gs1-system/the-gs1-system/helpful-tool/check-digit-calculator-ean-13-barcode-generator
      */
     //Fragment tags
     private final String _search_fragment = "search fragment";
@@ -104,20 +106,25 @@ public class MainActivity extends AppCompatActivity
          * TODO: Add to database along with some others
          */
 
-        Diet.list.put(
-                "1",
-                new Diet(
-                "Gluten allergi",
-                new HashMap<String, Source>(),
-                new HashMap<String, Type>(){{
-                    put("9", Type.list.get("9"));
 
-                }},
-                new HashMap<String, Allergen>(){{
-                    put("5", Allergen.list.get("5"));
+       try{
+           Diet.list.put(
+                   "1",
+                   new Diet(
+                           "Gluten allergi",
+                           new HashMap<Integer, Source>(),
+                           new HashMap<Integer, Type>(){{
+                               put(9, Type.list.get(9));
 
-                }}
-        ));
+                           }},
+                           new HashMap<Integer, Allergen>(){{
+                               put(5, Allergen.list.get(5));
+
+                           }}
+                   ));
+       }catch(Exception e){
+           e.printStackTrace();
+       }
     }
 
     @Override
@@ -245,16 +252,21 @@ public class MainActivity extends AppCompatActivity
             Allergen.list.clear();
             //populating
             JSONArray jArr = result;
-            for(int i = 0; i < jArr.length(); i++)
+            for(int i = 0; i < jArr.length(); i++) {
                 try {
                     Log.d("init", "Allergen: " + ((JSONObject) jArr.get(i)).getString("allergen") + ((JSONObject) jArr.get(i)).getString("allergenid"));
                     Allergen.list.put(
                             ((JSONObject) jArr.get(i)).getInt("allergenid"),
                             new Allergen(((JSONObject) jArr.get(i)).getString("allergen"))
                     );
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+            for(Integer i : Allergen.list.keySet())
+                Log.d("test", "key " + i + " : " + Allergen.list.get(i).getAllergen());
         }
     }
     //Sources

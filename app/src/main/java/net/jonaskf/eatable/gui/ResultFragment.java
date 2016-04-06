@@ -100,10 +100,13 @@ public class ResultFragment extends Fragment {
             //Building list of found allergens in this product
             if(
                     !allergens.containsKey(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()))
-                    && !Diet.allAllergens.containsKey(key)
+                    && Diet.allAllergens.containsKey(key)
                     ){
                 allergens.put(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()), Allergen.list.get(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID())).getAllergen());
             }
+            Log.d("test", "Allergen ID: " + key);
+            for(Integer k : Diet.allAllergens.keySet())
+                Log.d("test", "Kake: " + Diet.allAllergens.get(k) + " - " + k);
 
         }
         //Building allergen string
