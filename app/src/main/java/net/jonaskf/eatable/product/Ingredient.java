@@ -47,13 +47,13 @@ public class Ingredient {
         return typeID;
     }
 
-    public static HashMap<Integer, Ingredient> addIngredients(JSONObject product){
-        HashMap<Integer, Ingredient> ingredients = new HashMap<>();
+    public static HashMap<String, Ingredient> addIngredients(JSONObject product){
+        HashMap<String, Ingredient> ingredients = new HashMap<>();
         try{
             for(int i = 0; i < product.getJSONArray("ingredients").length(); i++){
                 JSONObject obj = ((JSONObject)product.getJSONArray("ingredients").get(i));
                 ingredients.put(
-                        obj.getInt("ingredientID"),
+                        obj.getString("ingredientID"),
                         new Ingredient(
                                 obj.getString("name"),
                                 obj.getString("comment"),

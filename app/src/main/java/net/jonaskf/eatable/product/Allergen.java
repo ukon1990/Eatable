@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class Allergen {
     private String allergen;
-    public static HashMap<Integer, Allergen> list = new HashMap<>();
+    public static HashMap<String, Allergen> list = new HashMap<>();
 
     public Allergen(String allergen) {
         this.allergen = allergen;

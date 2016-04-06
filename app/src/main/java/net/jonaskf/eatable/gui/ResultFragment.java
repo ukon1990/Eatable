@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +14,9 @@ import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.diet.Diet;
+import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Product;
-import net.jonaskf.eatable.product.Source;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +28,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -53,14 +51,14 @@ public class ResultFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_result,container, false);
 
-        Log.d("Test", MainActivity.ean);
+        Log.d("Test", Vars.ean);
         productTitleTextView = ((TextView) view.findViewById(R.id.product_title));
         productIngredients = ((TextView) view.findViewById(R.id.ingredient_list));
         productAllergens = ((TextView) view.findViewById(R.id.product_acceptance));
         //((TextView) inflater.inflate(R.layout.fragment_result, container, false).findViewById(R.id.textView)).setText("Random");
 
 
-        getProductData(MainActivity.ean);
+        getProductData(Vars.ean);
         return view;
 
     }
@@ -73,10 +71,10 @@ public class ResultFragment extends Fragment {
 
     private void getProduct(JSONObject obj){
         boolean isEatable = true;
-        String ean = MainActivity.ean;
+        String ean = Vars.ean;
         String allergenText = "";
         String ingredientText ="";
-        HashMap<Integer, String> allergens = new HashMap<>();
+        HashMap<String, String> allergens = new HashMap<>();
         int i = 0;
         if(!Product.list.containsKey(ean)){
             Product.addProduct(obj);
@@ -85,7 +83,7 @@ public class ResultFragment extends Fragment {
             }catch(Exception e){e.printStackTrace();}
         }
         //Building ingredient string
-        for(int key : Product.list.get(ean).getIngredients().keySet()){
+        for(String key : Product.list.get(ean).getIngredients().keySet()){
             if(i == 0){
                 //Adding the first ingredient
                 ingredientText += Product.list.get(ean).getIngredients().get(key).getName().toUpperCase().subSequence(0,1)
@@ -97,23 +95,17 @@ public class ResultFragment extends Fragment {
                 ingredientText += ", " + Product.list.get(ean).getIngredients().get(key).getName();
             }
             i++;
-            //Building list of found allergens in this product
-            if(
-                    !allergens.containsKey(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()))
-                    && Diet.allAllergens.containsKey(key)
-                    ){
-                allergens.put(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID()), Allergen.list.get(Integer.parseInt(Product.list.get(ean).getIngredients().get(key).getAllergenID())).getAllergen());
-            }
-            Log.d("test", "Allergen ID: " + key);
-            for(Integer k : Diet.allAllergens.keySet())
-                Log.d("test", "Kake: " + Diet.allAllergens.get(k) + " - " + k);
+            //Building list of found allergens in this product if it is something the user can't eat.
+            String allergenID = Product.list.get(ean).getIngredients().get(key).getAllergenID();
+            if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID))
+                allergens.put(allergenID, Allergen.list.get(allergenID).getAllergen());
 
         }
         //Building allergen string
         if(allergens.size() != 0){
             int c = allergens.size();
-            for(Integer a : allergens.keySet()){
-                if(a != 0){
+            for(String a : allergens.keySet()){
+                if(allergens.size() > 0){
                     if(c == allergens.size()){
                         allergenText += allergens.get(a).toUpperCase().substring(0,1) + allergens.get(a).substring(1) + (c == 1 ? ".":"");
                     }else if(c == 1){
@@ -128,12 +120,15 @@ public class ResultFragment extends Fragment {
         }
         //Setting text label content
         productTitleTextView.setText(Product.list.get(ean).getName());
-        if(allergenText.length()>0){
+        if(allergenText.length()>0)
             productAllergens.setText(allergenText);
-        }
         productIngredients.setText(ingredientText);
     }
 
+    /**
+     * Depricated?
+     * @param jsonObject
+     */
     private void getJsonObject(JSONObject jsonObject){
         String eanCode ="";
         String productName ="";
@@ -202,6 +197,7 @@ public class ResultFragment extends Fragment {
         TextView textView = (TextView) getActivity().findViewById(R.id.textView);
         textView.setText(text);
     }
+
     //Async to allow download on a thread other than main thread
     private class DownloadFileTask extends AsyncTask<String, Integer, JSONObject> {
         @Override
@@ -251,11 +247,11 @@ public class ResultFragment extends Fragment {
             }else{
                 //Opening a dialog box if product don't exsist in DB
                 new AlertDialog.Builder(getContext())
-                        .setTitle(MainActivity.ean)//R.string.product_does_not_exist_title)
+                        .setTitle(Vars.ean)//R.string.product_does_not_exist_title)
                         .setMessage(R.string.product_does_not_exist_msg)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int which){
-                                //Logic
+                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._ADD_PRODUCT_FRAGMENT).addToBackStack(null).commit();
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

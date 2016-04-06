@@ -8,7 +8,7 @@ import java.util.HashMap;
 //Class for ingredient source
 public class Source{
     private String source;
-    public static HashMap<Integer, Source> list = new HashMap<>();
+    public static HashMap<String, Source> list = new HashMap<>();
 
     public Source(String source) {
         this.source = source;

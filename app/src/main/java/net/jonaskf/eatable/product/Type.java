@@ -8,7 +8,7 @@ import java.util.HashMap;
 //Class for ingredient type
 public class Type{
     private String ingredientType;
-    public static HashMap<Integer, Type> list = new HashMap<>();
+    public static HashMap<String, Type> list = new HashMap<>();
 
     public Type(String ingredientType) {
         this.ingredientType = ingredientType;

@@ -21,6 +21,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.diet.Diet;
+import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
@@ -38,7 +39,6 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     /**
      * GetAllergens.php - http://frigg.hiof.no/android_v165/GetAllergens.php
      * GetSoruces.php - http://frigg.hiof.no/android_v165/GetSources.php
@@ -46,13 +46,6 @@ public class MainActivity extends AppCompatActivity
      *
      * Barcode generator: https://www.gs1.ch/en/gs1-system/the-gs1-system/helpful-tool/check-digit-calculator-ean-13-barcode-generator
      */
-    //Fragment tags
-    private final String _search_fragment = "search fragment";
-    private final String _scan_fragment = "scan fragment";
-    private final String _result_fragment = "result fragment";
-
-    public static String ean = "5000112595543";//TODO: Husk å sett denne tilbake til N/A ellnst.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //Starting the scan page fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), _scan_fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), Vars._SCAN_FRAGMENT).commit();
 
         final IntentIntegrator intentIntegrator = new IntentIntegrator(this);
         //Floating scan button
@@ -71,8 +64,34 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Initiating scan if pressed
-                intentIntegrator.setOrientationLocked(true).initiateScan();
+            /**
+             * Diet
+             *
+             * Adding temporary diet for the user for now
+             * TODO: Add to database along with some others
+             */
+
+
+            try{
+                Diet.list.put(
+                        "1",
+                        new Diet(
+                                "Gluten allergi",
+                                new HashMap<String, Source>(),
+                                new HashMap<String, Type>(){{
+                                    put("9", Type.list.get("9"));
+
+                                }},
+                                new HashMap<String, Allergen>(){{
+                                    put("5", Allergen.list.get("5"));
+
+                                }}
+                        ));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            //Initiating scan if pressed
+            intentIntegrator.setOrientationLocked(true).initiateScan();
             }
         });
 
@@ -98,33 +117,6 @@ public class MainActivity extends AppCompatActivity
         getAllSources();
         getAllTypes();
         Diet.getAllDiets();
-
-        /**
-         * Diet
-         *
-         * Adding temporary diet for the user for now
-         * TODO: Add to database along with some others
-         */
-
-
-       try{
-           Diet.list.put(
-                   "1",
-                   new Diet(
-                           "Gluten allergi",
-                           new HashMap<Integer, Source>(),
-                           new HashMap<Integer, Type>(){{
-                               put(9, Type.list.get(9));
-
-                           }},
-                           new HashMap<Integer, Allergen>(){{
-                               put(5, Allergen.list.get(5));
-
-                           }}
-                   ));
-       }catch(Exception e){
-           e.printStackTrace();
-       }
     }
 
     @Override
@@ -169,11 +161,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_scan) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScanFragment(), _scan_fragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScanFragment(), Vars._SCAN_FRAGMENT).addToBackStack(null).commit();
         } else if (id == R.id.nav_manual) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), _search_fragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).addToBackStack(null).commit();
         } else if(id == R.id.nav_show_result){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commit();
         }else if (id == R.id.nav_settings) {
             startActivityForResult(new Intent(this, SettingsActivity.class), 1);
         }
@@ -192,10 +184,10 @@ public class MainActivity extends AppCompatActivity
                 Log.d("Cancelled from fragment", "Cancelled from fragment");
             } else {
                 //TODO: Add try catch
-                ean = result.getContents();
-                Log.d("onActivityResult", ean);
+                Vars.ean = result.getContents();
+                Log.d("onActivityResult", Vars.ean);
                 try{
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), _result_fragment).addToBackStack(null).commitAllowingStateLoss();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commitAllowingStateLoss();
                 }catch(Exception e){
                     Log.d("scan result", "failed :(", e);
                     e.printStackTrace();
@@ -254,9 +246,8 @@ public class MainActivity extends AppCompatActivity
             JSONArray jArr = result;
             for(int i = 0; i < jArr.length(); i++) {
                 try {
-                    Log.d("init", "Allergen: " + ((JSONObject) jArr.get(i)).getString("allergen") + ((JSONObject) jArr.get(i)).getString("allergenid"));
                     Allergen.list.put(
-                            ((JSONObject) jArr.get(i)).getInt("allergenid"),
+                            ((JSONObject) jArr.get(i)).getString("allergenid"),
                             new Allergen(((JSONObject) jArr.get(i)).getString("allergen"))
                     );
 
@@ -265,8 +256,6 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
             }
-            for(Integer i : Allergen.list.keySet())
-                Log.d("test", "key " + i + " : " + Allergen.list.get(i).getAllergen());
         }
     }
     //Sources
@@ -303,9 +292,8 @@ public class MainActivity extends AppCompatActivity
             JSONArray jArr = result;
             for(int i = 0; i < jArr.length(); i++)
                 try {
-                    Log.d("init", ((JSONObject) jArr.get(i)).getString("source"));
                     Source.list.put(
-                            ((JSONObject) jArr.get(i)).getInt("sourceID"),
+                            ((JSONObject) jArr.get(i)).getString("sourceID"),
                             new Source(((JSONObject) jArr.get(i)).getString("source"))
                     );
                 } catch (JSONException e) {
@@ -348,9 +336,8 @@ public class MainActivity extends AppCompatActivity
             JSONArray jArr = result;
             for(int i = 0; i < jArr.length(); i++)
                 try {
-                    Log.d("init", ((JSONObject) jArr.get(i)).getString("ingredientType"));
                     Type.list.put(
-                            ((JSONObject) jArr.get(i)).getInt("typeID"),
+                            ((JSONObject) jArr.get(i)).getString("typeID"),
                             new Type(((JSONObject) jArr.get(i)).getString("ingredientType"))
                     );
                 } catch (JSONException e) {

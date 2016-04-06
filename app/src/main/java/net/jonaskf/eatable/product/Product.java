@@ -15,12 +15,12 @@ public class Product {
     private String name;
     private String comment;
 
-    private HashMap<Integer, Ingredient> ingredients = new HashMap<>();
+    private HashMap<String, Ingredient> ingredients = new HashMap<>();
 
     //product list
     public static HashMap<String, Product> list = new HashMap<>();
 
-    public Product(String id, String name, String comment, HashMap<Integer, Ingredient> ingredients) {
+    public Product(String id, String name, String comment, HashMap<String, Ingredient> ingredients) {
         this.id = id;
         this.name = name;
         this.comment = comment;
@@ -40,12 +40,12 @@ public class Product {
         return comment;
     }
 
-    public HashMap<Integer, Ingredient> getIngredients() {
+    public HashMap<String, Ingredient> getIngredients() {
         return ingredients;
     }
 
     public static void addProduct(JSONObject obj){
-        HashMap<Integer, Ingredient> ingredients = Ingredient.addIngredients(obj);
+        HashMap<String, Ingredient> ingredients = Ingredient.addIngredients(obj);
         try{
             list.put(
                     obj.getString("ean"),
