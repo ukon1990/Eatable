@@ -19,7 +19,7 @@ import net.jonaskf.eatable.R;
  */
 public class AddProductFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -32,7 +32,7 @@ public class AddProductFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_product, container, false);
     }
-
+    /*
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -66,9 +66,10 @@ public class AddProductFragment extends Fragment {
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    */
 }
