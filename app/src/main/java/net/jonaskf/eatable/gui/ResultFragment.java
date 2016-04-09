@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,12 +52,11 @@ public class ResultFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_result,container, false);
 
-        Log.d("Test", Vars.ean);
-        productTitleTextView = ((TextView) view.findViewById(R.id.product_title));
+        //Initiatin some default text
         productIngredients = ((TextView) view.findViewById(R.id.ingredient_list));
         productAllergens = ((TextView) view.findViewById(R.id.product_acceptance));
-        //((TextView) inflater.inflate(R.layout.fragment_result, container, false).findViewById(R.id.textView)).setText("Random");
-
+        //Changing actionbar title
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.result_fragment_title);
 
         getProductData(Vars.ean);
         return view;
@@ -118,8 +118,8 @@ public class ResultFragment extends Fragment {
             }
             allergens.clear();
         }
-        //Setting text label content
-        productTitleTextView.setText(Product.list.get(ean).getName());
+        //Setting text label & actionbar content
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Product.list.get(ean).getName());
         if(allergenText.length()>0)
             productAllergens.setText(allergenText);
         productIngredients.setText(ingredientText);

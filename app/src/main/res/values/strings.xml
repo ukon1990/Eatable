@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eatable</string>
+    <string name="app_name">Spisbart?</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -72,7 +72,7 @@
     <string name="allergic_result">Produktet er trygt å konsumere.</string>
     <string name="allergic_title">Allergener:</string>
     <string name="show_result">Vis sist scannede produkt</string>
-    <string name="manual_search">Manuelt søk</string>
+    <string name="manual_search">Søk etter et produkt</string>
     <string name="scan_product">Skann produkt</string>
     <string name="settings">Instillinger</string>
     <string name="product_does_not_exist_title">Produktet finnes ikke</string>
@@ -81,4 +81,15 @@
     <string name="no">Nei</string>
     <string name="my_diets">Mine dietter</string>
     <string name="product_ean">Produktets ean kode</string>
+    <string name="product_name">produkt navn</string>
+    <string name="add_ingredient">Legg til ingrediens</string>
+    <string name="add_product_to_db">Legg til produkt i databasen</string>
+    <string name="my_diets_title">Mine dietter</string>
+    <string name="scan_fragment_title">Skann et produkt</string>
+    <string name="manual_search_fragment_title">Manuelt produkt søk</string>
+    <string name="result_fragment_title">Ukjent produkt</string>
+    <string name="diet_fragment_explenation">Her kan du legge til og fjerne dietter.</string>
+    <string name="add_diet">Legg til diett</string>
+    <string name="find_product">Finn produkt</string>
+    <string name="search_hint">Søke hint?</string>
 </resources>

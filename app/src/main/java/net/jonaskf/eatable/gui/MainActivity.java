@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
      *
      * Barcode generator: https://www.gs1.ch/en/gs1-system/the-gs1-system/helpful-tool/check-digit-calculator-ean-13-barcode-generator
      */
+    private IntentIntegrator intentIntegrator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,45 +57,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         //Starting the scan page fragment
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ScanFragment(), Vars._SCAN_FRAGMENT).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
 
-        final IntentIntegrator intentIntegrator = new IntentIntegrator(this);
-        //Floating scan button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            /**
-             * Diet
-             *
-             * Adding temporary diet for the user for now
-             * TODO: Add to database along with some others
-             */
-
-            try{
-                Diet.list.put(
-                        "1",
-                        new Diet(
-                                "Gluten allergi",
-                                new HashMap<String, Source>(),
-                                new HashMap<String, Type>(){{
-                                    put("9", Type.list.get("9"));
-
-                                }},
-                                new HashMap<String, Allergen>(){{
-                                    put("5", Allergen.list.get("5"));
-
-                                }}
-                        ));
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            //Initiating scan if pressed
-            intentIntegrator.setOrientationLocked(true).initiateScan();
-            }
-        });
+        intentIntegrator = new IntentIntegrator(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -120,6 +85,37 @@ public class MainActivity extends AppCompatActivity
         getAllDietsList();
         //Diet.getAllDiets();
     }
+
+    public void scanProduct(View view){
+        /**
+         * Diet
+         *
+         * Adding temporary diet for the user for now
+         * TODO: Add to database along with some others
+         */
+
+        try{
+            Diet.list.put(
+                    "1",
+                    new Diet(
+                            "Gluten allergi",
+                            new HashMap<String, Source>(),
+                            new HashMap<String, Type>(){{
+                                put("9", Type.list.get("9"));
+
+                            }},
+                            new HashMap<String, Allergen>(){{
+                                put("5", Allergen.list.get("5"));
+
+                            }}
+                    ));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        //Initiating scan if pressed
+        intentIntegrator.setOrientationLocked(true).initiateScan();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -163,8 +159,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_scan) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScanFragment(), Vars._SCAN_FRAGMENT).addToBackStack(null).commit();
-        } else if (id == R.id.nav_manual) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).addToBackStack(null).commit();
         } else if(id == R.id.nav_show_result){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commit();

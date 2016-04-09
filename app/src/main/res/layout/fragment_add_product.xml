@@ -5,24 +5,69 @@
     android:layout_marginTop="?attr/actionBarSize"
     tools:context=".gui.AddProductFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/product_ean_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/product_ean" />
+        android:text="@string/product_ean"
+        android:layout_marginLeft="10dp" />
+    <TextView
+        android:id="@+id/product_ean"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/product_ean_label"
+        android:layout_marginRight="10dp"
+        android:text="ean"/>
     <TextView
         android:id="@+id/product_name_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/product_ean_label"
-        android:string="@string/product_name"/>
+        android:layout_height="40dp"
+        android:text="@string/product_name"
+        android:layout_below="@+id/product_ean_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"/>
     <AutoCompleteTextView
         android:id="@+id/product_name_tw"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/product_name_label"
+        android:layout_below="@+id/product_ean_label"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
+    <Button
+        android:id="@+id/add_product"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/add_product_to_db"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/product_ean_label"
+        android:layout_alignEnd="@+id/product_ean_label" />
+
+    <RelativeLayout
+        android:layout_below="@id/product_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/add_product">
+        <Button
+            android:id="@+id/add_ingredient_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_ingredient"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ListView
+            android:id="@+id/ingredient_list"
+            android:layout_width="match_parent"
+            android:layout_below="@id/add_ingredient_btn"
+            android:layout_height="wrap_content"
+            android:clickable="true">
+        </ListView>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -7,21 +7,11 @@
     android:layout_marginTop="?attr/actionBarSize"
     android:background="#ffffff">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/product_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Result fragment"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:textSize="@dimen/abc_text_size_headline_material" />
     <TextView
         android:id="@+id/allergic_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_below="@id/product_title"
         android:text="@string/allergic_title"
         android:textSize="@dimen/abc_text_size_large_material"/>
     <TextView
