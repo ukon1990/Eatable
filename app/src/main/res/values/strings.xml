@@ -92,4 +92,5 @@
     <string name="add_diet">Legg til diett</string>
     <string name="find_product">Finn produkt</string>
     <string name="search_hint">Søke hint?</string>
+    <string name="add_product_fragment_title">Legg til produkt</string>
 </resources>

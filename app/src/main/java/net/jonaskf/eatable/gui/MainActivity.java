@@ -70,11 +70,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //TODO: HashMap<String, Product> hm = GetFromAPI.getStations(GetFromAPI.testArrayInput);
-        /*
-        for(String key : hm.keySet()){
-            Log.d("Product", hm.get(key).getName() + " has " + hm.get(key).getIngredients().size() + " ingredients.");
-        }*/
 
         /**
          * Adding ingredientsTypes, Allergens and product sources.
@@ -91,7 +86,7 @@ public class MainActivity extends AppCompatActivity
          * Diet
          *
          * Adding temporary diet for the user for now
-         * TODO: Add to database along with some others
+         * TODO: Fetch from DB instead of locally
          */
 
         try{
