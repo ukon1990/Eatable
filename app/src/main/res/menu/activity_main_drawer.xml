@@ -8,7 +8,7 @@
             android:title="@string/find_product" />
         <item
             android:id="@+id/nav_show_result"
-            android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+            android:icon="@drawable/ic_recent_product"
             android:title="@string/show_result" />
         <item
             android:id="@+id/diet_settings"

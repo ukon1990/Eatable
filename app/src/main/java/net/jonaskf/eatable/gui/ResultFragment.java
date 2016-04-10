@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
@@ -45,6 +46,7 @@ public class ResultFragment extends Fragment {
     private TextView productTitleTextView; //For product name
     private TextView productIngredients; //For the product ingredients
     private TextView productAllergens;
+    private ImageView eatableIcon;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class ResultFragment extends Fragment {
         //Initiatin some default text
         productIngredients = ((TextView) view.findViewById(R.id.ingredient_list));
         productAllergens = ((TextView) view.findViewById(R.id.product_acceptance));
+        eatableIcon = ((ImageView) view.findViewById(R.id.is_eatable_icon));
         //Changing actionbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.result_fragment_title);
 
@@ -120,8 +123,12 @@ public class ResultFragment extends Fragment {
         }
         //Setting text label & actionbar content
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Product.list.get(ean).getName());
-        if(allergenText.length()>0)
+        if(allergenText.length()>0){
             productAllergens.setText(allergenText);
+            eatableIcon.setImageResource(R.drawable.uneatable);
+        }else{
+            eatableIcon.setImageResource(R.drawable.iseatable);
+        }
         productIngredients.setText(ingredientText);
     }
 

@@ -20,11 +20,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="@string/allergic_result"
-        />
+        android:text="@string/allergic_result"/>
+    <ImageView
+        android:id="@+id/is_eatable_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iseatable"
+        android:layout_alignParentRight="true"/>
     <TextView
         android:id="@+id/ingredient_title_textview"
-        android:layout_below="@id/product_acceptance"
+        android:layout_below="@id/is_eatable_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

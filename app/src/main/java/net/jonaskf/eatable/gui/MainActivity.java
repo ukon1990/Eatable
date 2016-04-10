@@ -1,5 +1,6 @@
 package net.jonaskf.eatable.gui;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -79,8 +80,20 @@ public class MainActivity extends AppCompatActivity
         getAllTypes();
         getAllDietsList();
         //Diet.getAllDiets();
+
+        /**
+         * Search functionality
+         */
+        Intent searchIntent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
+            String query = searchIntent.getStringExtra(SearchManager.QUERY);
+            searchProduct(query);
+        }
     }
 
+    public void searchProduct(String query){
+
+    }
     public void scanProduct(View view){
         /**
          * Diet
