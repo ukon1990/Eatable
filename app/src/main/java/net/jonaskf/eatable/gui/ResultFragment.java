@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,21 +88,53 @@ public class ResultFragment extends Fragment {
         }
         //Building ingredient string
         for(String key : Product.list.get(ean).getIngredients().keySet()){
-            if(i == 0){
-                //Adding the first ingredient
-                ingredientText += Product.list.get(ean).getIngredients().get(key).getName().toUpperCase().subSequence(0,1)
-                        + Product.list.get(ean).getIngredients().get(key).getName().substring(1);
-            }else if(i == Product.list.get(ean).getIngredients().size()-1){
-                //Adding the last
-                ingredientText += " og " + Product.list.get(ean).getIngredients().get(key).getName() + ".";
-            }else{
-                ingredientText += ", " + Product.list.get(ean).getIngredients().get(key).getName();
-            }
-            i++;
+            boolean isEatableIngredient;
+            String name = Product.list.get(ean).getIngredients().get(key).getName();;
+            /**
+             * Allergens
+             */
             //Building list of found allergens in this product if it is something the user can't eat.
             String allergenID = Product.list.get(ean).getIngredients().get(key).getAllergenID();
-            if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID))
+            if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID)) {
                 allergens.put(allergenID, Allergen.list.get(allergenID).getAllergen());
+                isEatableIngredient = true;
+            }
+            else if(!allergenID.equals("0") && Diet.allAllergens.containsKey(allergenID))
+                //Checking if the product have an allergen that isn't the one with and ID of 0 (None).
+                isEatableIngredient = true;
+            else
+                isEatableIngredient = false;
+
+            //Changing the text if the item contains something the user should not eat
+            if(isEatableIngredient && Diet.allAllergens.containsKey(allergenID))
+                name = "<font color='#ab011e'>" + name + "</font>";
+            //Checking if the product is marked as eatable or not
+            if(isEatableIngredient && isEatable)
+                isEatable = false;
+
+            /**
+             * Sources
+             */
+            //TODO: !!
+            /**
+             * Types
+             */
+            //TODO: !!
+
+            /**
+             * Adding and formatting a string of ingredients
+             */
+            if(i == 0){
+                //Adding the first ingredient
+                ingredientText += name.toUpperCase().subSequence(0,1)
+                        + name.substring(1);
+            }else if(i == Product.list.get(ean).getIngredients().size()-1){
+                //Adding the last
+                ingredientText += " og " + name + ".";
+            }else{
+                ingredientText += ", " + name;
+            }
+            i++;
 
         }
         //Building allergen string
@@ -123,13 +156,15 @@ public class ResultFragment extends Fragment {
         }
         //Setting text label & actionbar content
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Product.list.get(ean).getName());
-        if(allergenText.length()>0){
+        if(allergenText.length()>0)
             productAllergens.setText(allergenText);
-            eatableIcon.setImageResource(R.drawable.uneatable);
-        }else{
+        productIngredients.setText(Html.fromHtml(ingredientText));
+
+        //Changing eatable img
+        if(isEatable)
             eatableIcon.setImageResource(R.drawable.iseatable);
-        }
-        productIngredients.setText(ingredientText);
+        else
+            eatableIcon.setImageResource(R.drawable.uneatable);
     }
 
     /**
