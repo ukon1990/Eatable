@@ -4,20 +4,20 @@ package net.jonaskf.eatable.gui;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-
+import android.widget.SearchView;
 
 import net.jonaskf.eatable.R;
-import net.jonaskf.eatable.adapter.ProductAdapter;
+import net.jonaskf.eatable.adapter.DietAdapter;
+import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.product.Product;
+import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Source;
+import net.jonaskf.eatable.product.Type;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,81 +29,67 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 /**
- * Søkefunksjonaliteten er basert på følgende guide:
- * http://developer.android.com/guide/topics/search/search-dialog.html
+ * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment {
-    private View view;
-    private ProductAdapter adapter;
-    private ListView listView;
-    private SearchView searchView;
-    private List<Product> resultList = new ArrayList<>();
+public class AddDietFragment extends Fragment {
 
-    public SearchFragment() {
+    private View view;
+    private SearchView searchView;
+    private ListView listView;
+    private DietAdapter adapter;
+    private List<Diet> resultList = new ArrayList<>();
+
+    public AddDietFragment() {
         // Required empty public constructor
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_search, container, false);
-        //Changing actionbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.search_fragment_title);
+        view = inflater.inflate(R.layout.fragment_my_diet, container, false);
 
-        //Search
-        searchView = (SearchView) view.findViewById(R.id.product_search);
+        //Search support
+        searchView = (SearchView) view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                productSearch(query);
+                dietSearch(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                productSearch(newText);
+                dietSearch(newText);
                 return false;
             }
         });
+
+
         //The list
-        listView = (ListView) view.findViewById(R.id.product_list);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Vars.ean = resultList.get(position).getId();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commit();
-            }
-        });
+        listView = (ListView) view.findViewById(R.id.diet_search_list);
         return view;
     }
 
-
-
-    /**
-     * Searching the db
-     */
-
-
-    private void productSearch(String query){
-        DownloadProduct dl = new DownloadProduct();
-        dl.execute(Vars.GET_PRODUCTS + Vars.Q_SEARCH + query);
+    private void dietSearch(String query){
+        DownloadDiet dl = new DownloadDiet();
+        dl.execute(Vars.GET_DIETS + Vars.Q_SEARCH + query);
     }
-    public void productSearchResult(){
-        adapter = new ProductAdapter(getActivity(), android.R.layout.simple_list_item_1);
-
-        for(int i = 0; i<resultList.size()-1; i++){
-            Log.d("test", "Prod: " + resultList.get(i).getName());
-        }
+    public void dietSearchResult(){
+        adapter = new DietAdapter(getActivity(), android.R.layout.simple_list_item_1);
 
         listView.setAdapter(adapter);
         adapter.addAll(resultList);
     }
-    private class DownloadProduct extends AsyncTask<String, Integer, JSONArray> {
+
+    private class DownloadDiet extends AsyncTask<String, Integer, JSONArray> {
         @Override
         protected JSONArray doInBackground(String... urls) {
             URLConnection uConn;
@@ -137,18 +123,18 @@ public class SearchFragment extends Fragment {
             for(int i = 0; i < jArr.length(); i++) {
                 try {
                     resultList.add(
-                            new Product(
-                                ((JSONObject) jArr.get(i)).getString("productID"),
-                                ((JSONObject) jArr.get(i)).getString("productName"),
-                            null,
-                            null
-                        ) );
+                            new Diet(
+                                    ((JSONObject) jArr.get(i)).getString("dietID"),
+                                    new HashMap<String, Source>(),
+                                    new HashMap<String, Type>(),
+                                    new HashMap<String, Allergen>()
+                            ) );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 //Log.d("test", resultList.get(i).getName()+ " size -> " + resultList.size());
             }
-            productSearchResult();
+            dietSearchResult();
         }
     }
 }

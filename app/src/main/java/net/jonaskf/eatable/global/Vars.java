@@ -13,4 +13,18 @@ public class Vars {
     public static final String _RESULT_FRAGMENT = "result fragment";
     public static final String _ADD_PRODUCT_FRAGMENT = "add product fragment";
     public static final String _MY_DIETS_FRAGMENT = "my diets fragment";
+    public static final String _ADD_DIET_FRAGMENT = "add diet fragment";
+
+    //URLs
+    public static final String GET_PRODUCTS ="http://frigg.hiof.no/android_v165/api/GetProducts.php?";
+    public static final String GET_ALLERGENS ="http://frigg.hiof.no/android_v165/api/GetAllergens.php?";
+    public static final String GET_SOURCES = "http://frigg.hiof.no/android_v165/api/GetSources.php?";
+    public static final String GET_TYPES = "http://frigg.hiof.no/android_v165/api/GetTypes.php?";
+    public static final String GET_DIETS ="http://frigg.hiof.no/android_v165/api/GetDiets.php?";
+    public static final String GET_INGREDIENTS ="http://frigg.hiof.no/android_v165/api/GetIngredients.php?";
+
+    //Query
+    public static final String Q_SEARCH = "search=";
+    public static final String Q_EAN = "ean=";
+    public static final String Q_ID = "id=";
 }

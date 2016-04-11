@@ -21,6 +21,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import net.jonaskf.eatable.R;
+import net.jonaskf.eatable.adapter.ProductAdapter;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Lists;
 import net.jonaskf.eatable.global.Vars;
@@ -95,31 +96,6 @@ public class MainActivity extends AppCompatActivity
 
     }
     public void scanProduct(View view){
-        /**
-         * Diet
-         *
-         * Adding temporary diet for the user for now
-         * TODO: Fetch from DB instead of locally
-         */
-
-        try{
-            Diet.list.put(
-                    "1",
-                    new Diet(
-                            "Gluten allergi",
-                            new HashMap<String, Source>(),
-                            new HashMap<String, Type>(){{
-                                put("9", Type.list.get("9"));
-
-                            }},
-                            new HashMap<String, Allergen>(){{
-                                put("5", Allergen.list.get("5"));
-
-                            }}
-                    ));
-        }catch(Exception e){
-            e.printStackTrace();
-        }
         //Initiating scan if pressed
         intentIntegrator.setOrientationLocked(true).initiateScan();
     }
@@ -206,19 +182,19 @@ public class MainActivity extends AppCompatActivity
      */
     public void getAllAllergens(){
         DownloadAllergen dl = new DownloadAllergen();
-        dl.execute("http://frigg.hiof.no/android_v165/api/GetAllergens.php");
+        dl.execute(Vars.GET_ALLERGENS);
     }
     public void getAllSources(){
         DownloadSources dl = new DownloadSources();
-        dl.execute("http://frigg.hiof.no/android_v165/api/GetSources.php");
+        dl.execute(Vars.GET_SOURCES);
     }
     public void getAllTypes(){
         DownloadTypes dl = new DownloadTypes();
-        dl.execute("http://frigg.hiof.no/android_v165/api/GetTypes.php");
+        dl.execute(Vars.GET_TYPES);
     }
     public void getAllDietsList(){
         DownloadDiets dl = new DownloadDiets();
-        dl.execute("http://frigg.hiof.no/android_v165/api/GetDiets.php");
+        dl.execute(Vars.GET_DIETS);
     }
 
     //Allergens

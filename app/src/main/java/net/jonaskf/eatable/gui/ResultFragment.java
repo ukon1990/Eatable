@@ -20,6 +20,8 @@ import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Product;
+import net.jonaskf.eatable.product.Source;
+import net.jonaskf.eatable.product.Type;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +53,31 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /**
+         * Diet
+         *
+         * Adding temporary diet for the user for now
+         * TODO: Gjør dette på en annen måte O_o
+         */
+
+        try{
+            Diet.list.put(
+                    "0",
+                    new Diet(
+                            "Gluten allergi",
+                            new HashMap<String, Source>(),
+                            new HashMap<String, Type>(){{
+                                put("9", Type.list.get("9"));
+
+                            }},
+                            new HashMap<String, Allergen>(){{
+                                put("5", Allergen.list.get("5"));
+
+                            }}
+                    ));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_result,container, false);
@@ -69,7 +96,7 @@ public class ResultFragment extends Fragment {
 
     public void getProductData (String ean){
         DownloadFileTask download = new DownloadFileTask();
-        String url = "http://frigg.hiof.no/android_v165/api/GetProducts.php?ean=" + ean;
+        String url = Vars.GET_PRODUCTS + Vars.Q_EAN + ean;
         download.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
     }
 

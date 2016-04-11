@@ -1,18 +1,45 @@
 package net.jonaskf.eatable.gui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import net.jonaskf.eatable.R;
+import net.jonaskf.eatable.adapter.DietAdapter;
+import net.jonaskf.eatable.adapter.ProductAdapter;
+import net.jonaskf.eatable.diet.Diet;
+import net.jonaskf.eatable.global.Vars;
+import net.jonaskf.eatable.product.Product;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class MyDietFragment extends Fragment {
 
     private View view;
+    private SearchView searchView;
+    private ListView listView;
+    private DietAdapter adapter;
+
     public MyDietFragment() {
         // Required empty public constructor
     }
@@ -25,6 +52,41 @@ public class MyDietFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my_diet, container, false);
         //Changing actionbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_diets_title);
+        //Search support
+        searchView = (SearchView) view.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //dietSearch(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //dietSearch(newText);
+                return false;
+            }
+        });
+
+        //The list
+        listView = (ListView) view.findViewById(R.id.my_diet_list);
+        showMyDiets();
+
+        //On click listener for in-fragment method
+        view.findViewById(R.id.add_diet_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddDietFragment(), Vars._ADD_DIET_FRAGMENT).addToBackStack(null).commit();
+            }
+        });
         return view;
+    }
+
+    private void showMyDiets(){
+        adapter = new DietAdapter(getActivity(), android.R.layout.simple_list_item_1);
+
+        listView.setAdapter(adapter);
+        adapter.addAll(Diet.list.values());
     }
 }

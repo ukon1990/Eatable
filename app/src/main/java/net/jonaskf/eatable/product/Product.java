@@ -2,6 +2,8 @@ package net.jonaskf.eatable.product;
 
 import android.util.Log;
 
+import net.jonaskf.eatable.gui.MainActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

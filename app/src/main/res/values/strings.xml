@@ -86,11 +86,13 @@
     <string name="add_product_to_db">Legg til produkt i databasen</string>
     <string name="my_diets_title">Mine dietter</string>
     <string name="scan_fragment_title">Skann et produkt</string>
-    <string name="manual_search_fragment_title">Manuelt produkt søk</string>
+    <string name="search_fragment_title">Finn produkt</string>
     <string name="result_fragment_title">Ukjent produkt</string>
     <string name="diet_fragment_explenation">Her kan du legge til og fjerne dietter.</string>
     <string name="add_diet">Legg til diett</string>
     <string name="find_product">Finn produkt</string>
     <string name="search_hint">Søke hint?</string>
     <string name="add_product_fragment_title">Legg til produkt</string>
+    <string name="company_name">Produsentens navn</string>
+    <string name="diet_name">Diett navn</string>
 </resources>
