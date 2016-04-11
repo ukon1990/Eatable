@@ -54,9 +54,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Loading user prefs
+        loadUserPrefs();
 
         //Starting the scan page fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
@@ -82,22 +86,42 @@ public class MainActivity extends AppCompatActivity
         getAllDietsList();
         //Diet.getAllDiets();
 
-        /**
-         * Search functionality
-         */
-        Intent searchIntent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
-            String query = searchIntent.getStringExtra(SearchManager.QUERY);
-            searchProduct(query);
-        }
     }
 
-    public void searchProduct(String query){
-
-    }
     public void scanProduct(View view){
         //Initiating scan if pressed
         intentIntegrator.setOrientationLocked(true).initiateScan();
+    }
+    public void loadUserPrefs(){
+        /**
+         * Diet
+         *
+         * Adding temporary diet for the user for now
+         * TODO: Gjør dette på en annen måte O_o
+         */
+
+        try{
+            Diet.list.put(
+                    "0",
+                    new Diet(
+                            "0",
+                            "Gluten allergi",
+                            new HashMap<String, Source>(),
+                            new HashMap<String, Type>(){{
+                                put("9", Type.list.get("9"));
+
+                            }},
+                            new HashMap<String, Allergen>(){{
+                                put("5", Allergen.list.get("5"));
+
+                            }}
+                    ));
+            for(String id : Diet.list.keySet()){
+                Diet.addToAllLists(Diet.list.get(id));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 

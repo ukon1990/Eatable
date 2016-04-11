@@ -53,32 +53,7 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        /**
-         * Diet
-         *
-         * Adding temporary diet for the user for now
-         * TODO: Gjør dette på en annen måte O_o
-         */
 
-        try{
-            Diet.list.put(
-                    "0",
-                    new Diet(
-                            "0",
-                            "Gluten allergi",
-                            new HashMap<String, Source>(),
-                            new HashMap<String, Type>(){{
-                                put("9", Type.list.get("9"));
-
-                            }},
-                            new HashMap<String, Allergen>(){{
-                                put("5", Allergen.list.get("5"));
-
-                            }}
-                    ));
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_result,container, false);
