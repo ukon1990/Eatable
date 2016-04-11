@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -53,10 +54,10 @@ public class AddDietFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_my_diet, container, false);
+        view = inflater.inflate(R.layout.fragment_add_diet, container, false);
 
         //Search support
-        searchView = (SearchView) view.findViewById(R.id.searchView);
+        searchView = (SearchView) view.findViewById(R.id.diet_searchview);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
             @Override
@@ -75,6 +76,14 @@ public class AddDietFragment extends Fragment {
 
         //The list
         listView = (ListView) view.findViewById(R.id.diet_search_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Diet.list.put(String.valueOf(position), resultList.get(position));
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
+            }
+        });
+        dietSearch("");
         return view;
     }
 
@@ -122,17 +131,51 @@ public class AddDietFragment extends Fragment {
             JSONArray jArr = result;
             for(int i = 0; i < jArr.length(); i++) {
                 try {
+                    //Source
+                    HashMap<String, Source> sources = new HashMap<>();
+                    try{
+                        JSONArray jSources = ((JSONObject) jArr.get(i)).getJSONArray("sources");
+                        for(int s = 0; s < jSources.length(); s++){
+                            sources.put(
+                                    ((JSONObject)jSources.get(s)).getString("sourceID"),
+                                    Source.list.get(((JSONObject)jSources.get(s)).getString("sourceID"))
+                            );
+                        }
+                    }catch(JSONException ex){}
+                    //Type
+                    HashMap<String, Type> types = new HashMap<>();
+                    try{
+                        JSONArray jTypes = ((JSONObject) jArr.get(i)).getJSONArray("allergens");
+                        for(int s = 0; s < jTypes.length(); s++){
+                            types.put(
+                                    ((JSONObject)jTypes.get(s)).getString("typeID"),
+                                    Type.list.get(((JSONObject)jTypes.get(s)).getString("typeID"))
+                            );
+                        }
+                    }catch (JSONException ex){}
+                    //Allergen
+                    HashMap<String, Allergen> allergens = new HashMap<>();
+                    try{
+                        JSONArray jAllergens = ((JSONObject) jArr.get(i)).getJSONArray("allergens");
+                        for(int s = 0; s < jAllergens.length(); s++){
+                            allergens.put(
+                                    ((JSONObject)jAllergens.get(s)).getString("allergenid"),
+                                    Allergen.list.get(((JSONObject)jAllergens.get(s)).getString("allergenid"))
+                            );
+                        }
+                    }catch(JSONException ex){}
+
                     resultList.add(
                             new Diet(
                                     ((JSONObject) jArr.get(i)).getString("dietID"),
-                                    new HashMap<String, Source>(),
-                                    new HashMap<String, Type>(),
-                                    new HashMap<String, Allergen>()
+                                    ((JSONObject) jArr.get(i)).getString("diet"),
+                                    sources,
+                                    types,
+                                    allergens
                             ) );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //Log.d("test", resultList.get(i).getName()+ " size -> " + resultList.size());
             }
             dietSearchResult();
         }

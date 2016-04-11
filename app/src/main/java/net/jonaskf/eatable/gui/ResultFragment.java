@@ -64,6 +64,7 @@ public class ResultFragment extends Fragment {
             Diet.list.put(
                     "0",
                     new Diet(
+                            "0",
                             "Gluten allergi",
                             new HashMap<String, Source>(),
                             new HashMap<String, Type>(){{

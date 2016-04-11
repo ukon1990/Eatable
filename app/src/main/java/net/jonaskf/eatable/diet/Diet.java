@@ -17,6 +17,7 @@ public class Diet {
      * The any element in either of the lists in the object is a item that the user
      * or anyone with the diet should not consume.
      */
+    private String id;
     private String diet;
     private HashMap<String, Source> source = new HashMap<>();
     private HashMap<String, Type> type = new HashMap<>();
@@ -30,32 +31,39 @@ public class Diet {
     //A list for getting and inserting data to the list of diets
     public static HashMap<String, Diet> list = new HashMap<>();
 
-    public Diet(String diet, HashMap<String, Source> source, HashMap<String, Type> type, HashMap<String, Allergen> allergen) {
+    public Diet(String id, String diet, HashMap<String, Source> source, HashMap<String, Type> type, HashMap<String, Allergen> allergen) {
+        this.id = id;
         this.diet = diet;
         this.source = source;
         this.type = type;
         this.allergen = allergen;
 
-        //Adding to all sources list
-        for(String key : source.keySet())
-            if(!allSources.containsKey(key))
-                allSources.put(key, source.get(key));
-        //Adding to all types
-        for(String key : type.keySet())
-            if(!allTypes.containsKey(key))
-                allTypes.put(key, type.get(key));
-        //Adding to all allergens
-        for(String key : this.allergen.keySet())
-            if(!allAllergens.containsKey(key))
-                allAllergens.put(key, this.allergen.get(key));
+        addToAllLists(this);
     }
 
     public static void getAllDiets(){
         //Temp version of the method
 
     }
+    public static void addToAllLists(Diet diet){
+    //Adding to all sources list
+        for(String key : diet.source.keySet())
+            if(!allSources.containsKey(key))
+                allSources.put(key, diet.source.get(key));
+        //Adding to all types
+        for(String key : diet.type.keySet())
+            if(!allTypes.containsKey(key))
+                allTypes.put(key, diet.type.get(key));
+        //Adding to all allergens
+        for(String key : diet.allergen.keySet())
+            if(!allAllergens.containsKey(key))
+                allAllergens.put(key, diet.allergen.get(key));
+    }
 
 
+    public String getId(){
+        return id;
+    }
     public String getDiet() {
         return diet;
     }
