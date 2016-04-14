@@ -76,13 +76,7 @@ public class AddDietFragment extends Fragment {
 
         //The list
         listView = (ListView) view.findViewById(R.id.diet_search_list);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Diet.list.put(String.valueOf(position), resultList.get(position));
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
-            }
-        });
+
         dietSearch("");
         return view;
     }
@@ -93,7 +87,6 @@ public class AddDietFragment extends Fragment {
     }
     public void dietSearchResult(){
         adapter = new DietAdapter(getActivity(), android.R.layout.simple_list_item_1);
-
         listView.setAdapter(adapter);
         adapter.addAll(resultList);
     }
@@ -129,49 +122,16 @@ public class AddDietFragment extends Fragment {
             resultList.clear();
             //populating
             JSONArray jArr = result;
+            Log.d("adddiet", "The array: "+result.toString());
             for(int i = 0; i < jArr.length(); i++) {
                 try {
-                    //Source
-                    HashMap<String, Source> sources = new HashMap<>();
-                    try{
-                        JSONArray jSources = ((JSONObject) jArr.get(i)).getJSONArray("sources");
-                        for(int s = 0; s < jSources.length(); s++){
-                            sources.put(
-                                    ((JSONObject)jSources.get(s)).getString("sourceID"),
-                                    Source.list.get(((JSONObject)jSources.get(s)).getString("sourceID"))
-                            );
-                        }
-                    }catch(JSONException ex){}
-                    //Type
-                    HashMap<String, Type> types = new HashMap<>();
-                    try{
-                        JSONArray jTypes = ((JSONObject) jArr.get(i)).getJSONArray("allergens");
-                        for(int s = 0; s < jTypes.length(); s++){
-                            types.put(
-                                    ((JSONObject)jTypes.get(s)).getString("typeID"),
-                                    Type.list.get(((JSONObject)jTypes.get(s)).getString("typeID"))
-                            );
-                        }
-                    }catch (JSONException ex){}
-                    //Allergen
-                    HashMap<String, Allergen> allergens = new HashMap<>();
-                    try{
-                        JSONArray jAllergens = ((JSONObject) jArr.get(i)).getJSONArray("allergens");
-                        for(int s = 0; s < jAllergens.length(); s++){
-                            allergens.put(
-                                    ((JSONObject)jAllergens.get(s)).getString("allergenid"),
-                                    Allergen.list.get(((JSONObject)jAllergens.get(s)).getString("allergenid"))
-                            );
-                        }
-                    }catch(JSONException ex){}
-
                     resultList.add(
                             new Diet(
                                     ((JSONObject) jArr.get(i)).getString("dietID"),
                                     ((JSONObject) jArr.get(i)).getString("diet"),
-                                    sources,
-                                    types,
-                                    allergens
+                                    new HashMap<String, Source>(),
+                                    new HashMap<String, Type>(),
+                                    new HashMap<String, Allergen>()
                             ) );
                 } catch (JSONException e) {
                     e.printStackTrace();

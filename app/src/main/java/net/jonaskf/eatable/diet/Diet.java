@@ -6,13 +6,15 @@ import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by jonas on 26.02.2016.
  * A class for holding diet objects.
  */
-public class Diet {
+public class Diet implements Serializable{
+    private static final long serialVersionUID = -324168761687654684L;
     /*
      * The any element in either of the lists in the object is a item that the user
      * or anyone with the diet should not consume.
@@ -37,27 +39,36 @@ public class Diet {
         this.source = source;
         this.type = type;
         this.allergen = allergen;
-
-        addToAllLists(this);
     }
 
-    public static void getAllDiets(){
-        //Temp version of the method
+    public static void updateLists(){
+        allAllergens.clear();
+        allSources.clear();
+        allTypes.clear();
+        for(String key : list.keySet()){
+            //Allergens
+            for(String allergen : list.get(key).getAllergen().keySet()){
+                if(!allAllergens.containsKey(allergen))
+                    allAllergens.put(allergen, list.get(key).getAllergen().get(allergen));
+            }
+            //Sources
+            for(String source : list.get(key).getSource().keySet()){
+                if(!allTypes.containsKey(source))
+                    allSources.put(source, list.get(key).getSource().get(source));
+            }
+            //Types
+            for(String type : list.get(key).getType().keySet()){
+                if(!allTypes.containsKey(type))
+                    allTypes.put(type, list.get(key).getType().get(type));
+            }
+            Log.d("test", "From diet: " + "-Allergen ->"+list.get(key).getAllergen().size() + " -Source -> " + list.get(key).getSource().size() + " -Type -> " + list.get(key).getType().size());
+        }
 
-    }
-    public static void addToAllLists(Diet diet){
-    //Adding to all sources list
-        for(String key : diet.source.keySet())
-            if(!allSources.containsKey(key))
-                allSources.put(key, diet.source.get(key));
-        //Adding to all types
-        for(String key : diet.type.keySet())
-            if(!allTypes.containsKey(key))
-                allTypes.put(key, diet.type.get(key));
-        //Adding to all allergens
-        for(String key : diet.allergen.keySet())
-            if(!allAllergens.containsKey(key))
-                allAllergens.put(key, diet.allergen.get(key));
+        //TODO: For debugging
+        Log.d("test", "All allergens: " + allAllergens.size());
+        Log.d("test", "All types: " + allTypes.size());
+        Log.d("test", "All source: " + allSources.size());
+
     }
 
 

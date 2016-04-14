@@ -27,4 +27,8 @@ public class Vars {
     public static final String Q_SEARCH = "search=";
     public static final String Q_EAN = "ean=";
     public static final String Q_ID = "id=";
+
+    //User prefs
+    public static final String PREFS_MY_DIET = "my diet prefs";
+    public static final String PREFS_SAVE_PATH = "myDiet.dat";
 }

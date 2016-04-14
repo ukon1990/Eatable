@@ -46,7 +46,6 @@ public class ResultFragment extends Fragment {
     }
 
     private View view;
-    private TextView productTitleTextView; //For product name
     private TextView productIngredients; //For the product ingredients
     private TextView productAllergens;
     private ImageView eatableIcon;
@@ -65,6 +64,9 @@ public class ResultFragment extends Fragment {
         //Changing actionbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.result_fragment_title);
 
+        //Updating the users diet data list in case it's not updated yet
+        Diet.updateLists();
+        //Updating fragment contents
         getProductData(Vars.ean);
         return view;
 
@@ -76,6 +78,11 @@ public class ResultFragment extends Fragment {
         download.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
     }
 
+    /**
+     * This method is responsible for displaying the downloaded data to the user.
+     * The ingredients are to be listed in a string, and if any allergens, sources
+     * or types the user don't wish to consume are present, they are displayed as well.
+     */
     private void getProduct(JSONObject obj){
         boolean isEatable = true;
         String ean = Vars.ean;
@@ -110,7 +117,7 @@ public class ResultFragment extends Fragment {
 
             //Changing the text if the item contains something the user should not eat
             if(isEatableIngredient && Diet.allAllergens.containsKey(allergenID))
-                name = "<font color='#ab011e'>" + name + "</font>";
+                name = "<font color='#ab011e'>" + name + "("+ Allergen.list.get(allergenID).getAllergen() +")</font>";
             //Checking if the product is marked as eatable or not
             if(isEatableIngredient && isEatable)
                 isEatable = false;
@@ -168,79 +175,6 @@ public class ResultFragment extends Fragment {
             eatableIcon.setImageResource(R.drawable.iseatable);
         else
             eatableIcon.setImageResource(R.drawable.uneatable);
-    }
-
-    /**
-     * Depricated?
-     * @param jsonObject
-     */
-    private void getJsonObject(JSONObject jsonObject){
-        String eanCode ="";
-        String productName ="";
-        String ingredients ="";
-        String allergenText = "";
-        JSONArray ingredientList;
-
-        HashMap<Integer, String> allergens = new HashMap<>();
-        try {
-            eanCode = jsonObject.getString("ean");
-            productName = jsonObject.getString("productName");
-            ingredientList = jsonObject.getJSONArray("ingredients");
-
-            for(int i = 0; i < ingredientList.length(); i++){
-                if(i == 0){
-                    //Adding the first ingredient
-                    ingredients += ((JSONObject)ingredientList.get(i)).getString("name").toUpperCase().subSequence(0,1)
-                                    + ((JSONObject)ingredientList.get(i)).getString("name").substring(1);
-                }else if(i == ingredientList.length()-1){
-                    //Adding the last
-                   ingredients += " og " + ((JSONObject)ingredientList.get(i)).getString("name") + ".";
-                }else{
-                    ingredients += ", " + ((JSONObject)ingredientList.get(i)).getString("name");
-                }
-
-                if(
-                        !allergens.containsKey(((JSONObject) ingredientList.get(i)).getInt("allergenid"))
-                                && ((JSONObject)ingredientList.get(i)).getInt("allergenid") != 0
-                ){
-                    allergens.put(
-                            ((JSONObject)ingredientList.get(i)).getInt("allergenid"),
-                            Allergen.list.get(((JSONObject)ingredientList.get(i)).getInt("allergenid")).getAllergen()
-
-                    );
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //Listing up all the allergens
-        int c = allergens.size();
-        for(Integer i : allergens.keySet()){
-            if(c == allergens.size()){
-                allergenText += allergens.get(i).toUpperCase().substring(0,1) + allergens.get(i).substring(1);
-                Log.d("test", c + "/" + allergens.size());
-            }else if(c == 1){
-                allergenText += " og " + allergens.get(i) + ".";
-                Log.d("test", c + "/" + allergens.size());
-            }else {
-                allergenText += ", " + allergens.get(i);
-                Log.d("test", c + "/" + allergens.size());
-            }
-            c--;
-        }
-        productTitleTextView.setText(productName + "\n" + eanCode);
-        productIngredients.setText(ingredients);
-        if(allergens.size() > 0){
-            productAllergens.setText(allergenText);
-        }
-        Log.d("product", eanCode + "(" + productName + ")");
-        allergens.clear();
-
-    }
-
-    public void updateText(String text){
-        TextView textView = (TextView) getActivity().findViewById(R.id.textView);
-        textView.setText(text);
     }
 
     //Async to allow download on a thread other than main thread

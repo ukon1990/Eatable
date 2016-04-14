@@ -1,12 +1,15 @@
 package net.jonaskf.eatable.product;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by jonas on 25.02.2016.
  */
 //Class for ingredient type
-public class Type{
+public class Type implements Serializable {
+    private static final long serialVersionUID = -324168761687654687L;
+
     private String ingredientType;
     public static HashMap<String, Type> list = new HashMap<>();
 

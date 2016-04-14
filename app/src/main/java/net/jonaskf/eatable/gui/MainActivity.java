@@ -2,6 +2,7 @@ package net.jonaskf.eatable.gui;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.ProductAdapter;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Lists;
+import net.jonaskf.eatable.global.Persistence;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
@@ -34,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -59,11 +62,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Loading user prefs
-        loadUserPrefs();
+
 
         //Starting the scan page fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
+        //Loading user prefs
+        loadUserPrefs();
 
         intentIntegrator = new IntentIntegrator(this);
 
@@ -84,7 +88,6 @@ public class MainActivity extends AppCompatActivity
         getAllSources();
         getAllTypes();
         getAllDietsList();
-        //Diet.getAllDiets();
 
     }
 
@@ -97,8 +100,8 @@ public class MainActivity extends AppCompatActivity
          * Diet
          *
          * Adding temporary diet for the user for now
-         * TODO: Gjør dette på en annen måte O_o
-         */
+         * TODO: http://developer.android.com/guide/topics/data/data-storage.html
+         * Key value sets: http://developer.android.com/training/basics/data-storage/shared-preferences.html
 
         try{
             Diet.list.put(
@@ -116,12 +119,20 @@ public class MainActivity extends AppCompatActivity
 
                             }}
                     ));
-            for(String id : Diet.list.keySet()){
-                Diet.addToAllLists(Diet.list.get(id));
-            }
+            Diet.updateLists();
         }catch(Exception e){
             e.printStackTrace();
-        }
+        }*/
+        //Loading user prefs if they exsist, if not opening the my diets window.
+        if(!Persistence.loadUserPrefs(this))
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
+
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Persistence.saveUserPrefs(this);
     }
 
 
