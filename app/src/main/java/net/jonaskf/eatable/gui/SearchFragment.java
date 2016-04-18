@@ -79,10 +79,9 @@ public class SearchFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commit();
             }
         });
+        productSearch("");
         return view;
     }
-
-
 
     /**
      * Searching the db

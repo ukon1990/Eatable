@@ -12,7 +12,7 @@
         jar="/Users/jonas/Documents/Development/Android/Eatable/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="22f9cdeefc68f62cebca31890e644cc19bdd1532">
+        sha1="76f360333281828101319199843fb54891465113">
         <dex dex="/Users/jonas/Documents/Development/Android/Eatable/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_0034aac513c3f2d8973022892159a797c35bb3fb/classes.dex" />
     </item>
     <item
@@ -68,7 +68,7 @@
         jar="/Users/jonas/Documents/Development/Android/Eatable/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="3e32aee80598e555d6f150e447401ebe7354af5e">
+        sha1="5f664db2c3d211fc32730c0112db2dde58130b7a">
         <dex dex="/Users/jonas/Documents/Development/Android/Eatable/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_96706d6a8946f619fe6bff83fc29c4d7cfb51415/classes.dex" />
     </item>
     <item

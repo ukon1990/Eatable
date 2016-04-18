@@ -96,33 +96,6 @@ public class MainActivity extends AppCompatActivity
         intentIntegrator.setOrientationLocked(true).initiateScan();
     }
     public void loadUserPrefs(){
-        /**
-         * Diet
-         *
-         * Adding temporary diet for the user for now
-         * TODO: http://developer.android.com/guide/topics/data/data-storage.html
-         * Key value sets: http://developer.android.com/training/basics/data-storage/shared-preferences.html
-
-        try{
-            Diet.list.put(
-                    "0",
-                    new Diet(
-                            "0",
-                            "Gluten allergi",
-                            new HashMap<String, Source>(),
-                            new HashMap<String, Type>(){{
-                                put("9", Type.list.get("9"));
-
-                            }},
-                            new HashMap<String, Allergen>(){{
-                                put("5", Allergen.list.get("5"));
-
-                            }}
-                    ));
-            Diet.updateLists();
-        }catch(Exception e){
-            e.printStackTrace();
-        }*/
         //Loading user prefs if they exsist, if not opening the my diets window.
         if(!Persistence.loadUserPrefs(this))
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
