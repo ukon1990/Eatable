@@ -52,22 +52,6 @@ public class MyDietFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my_diet, container, false);
         //Changing actionbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_diets_title);
-        //Search support
-        searchView = (SearchView) view.findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //dietSearch(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //dietSearch(newText);
-                return false;
-            }
-        });
 
         //The list
         listView = (ListView) view.findViewById(R.id.my_diet_list);

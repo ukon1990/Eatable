@@ -1,5 +1,7 @@
 package net.jonaskf.eatable.global;
 
+import android.graphics.Color;
+
 /**
  * Created by jonas on 06.04.16.
  */
@@ -31,4 +33,8 @@ public class Vars {
     //User prefs
     public static final String PREFS_MY_DIET = "my diet prefs";
     public static final String PREFS_SAVE_PATH = "myDiet.dat";
+
+    //Static colors
+    public static final int MILD_RED = Color.rgb(248, 79, 82);
+    public static final int MILD_GREEN = Color.rgb(52, 198, 65);
 }

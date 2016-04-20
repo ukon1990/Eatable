@@ -8,5 +8,13 @@
     tools:context=".gui.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <ImageView
+        android:id="@+id/splash_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/logo"
+        android:alpha="0.1" />
 
 </RelativeLayout>

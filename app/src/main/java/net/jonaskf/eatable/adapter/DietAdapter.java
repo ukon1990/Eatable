@@ -88,21 +88,21 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
     private void btnIcon(){
         if(Diet.list.containsKey(clickedDiet.getId())) {
             clickedBtn.setImageResource(android.R.drawable.ic_menu_delete);
-            clickedBtn.setBackgroundColor(Color.RED);
+            clickedBtn.setBackgroundColor(Vars.MILD_RED);
         }
         else{
             clickedBtn.setImageResource(android.R.drawable.ic_menu_add);
-            clickedBtn.setBackgroundColor(Color.GREEN);
+            clickedBtn.setBackgroundColor(Vars.MILD_GREEN);
         }
     }
     private void btnIcon(Diet diet, ImageButton imgBtn){
         if(Diet.list.containsKey(diet.getId())) {
             imgBtn.setImageResource(android.R.drawable.ic_menu_delete);
-            imgBtn.setBackgroundColor(Color.RED);
+            imgBtn.setBackgroundColor(Vars.MILD_RED);
         }
         else{
             imgBtn.setImageResource(android.R.drawable.ic_menu_add);
-            imgBtn.setBackgroundColor(Color.GREEN);
+            imgBtn.setBackgroundColor(Vars.MILD_GREEN);
         }
     }
 

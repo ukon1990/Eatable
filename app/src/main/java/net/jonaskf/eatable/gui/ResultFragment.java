@@ -89,6 +89,8 @@ public class ResultFragment extends Fragment {
         String allergenText = "";
         String ingredientText ="";
         HashMap<String, String> allergens = new HashMap<>();
+        HashMap<String, String> sources = new HashMap<>();
+        HashMap<String, String> types = new HashMap<>();
         int i = 0;
         if(!Product.list.containsKey(ean)){
             Product.addProduct(obj);
@@ -98,7 +100,8 @@ public class ResultFragment extends Fragment {
         }
         //Building ingredient string
         for(String key : Product.list.get(ean).getIngredients().keySet()){
-            boolean isEatableIngredient;
+            boolean isEatableIngredient = true;
+            String badStuff = "";
             String name = Product.list.get(ean).getIngredients().get(key).getName();;
             /**
              * Allergens
@@ -107,33 +110,68 @@ public class ResultFragment extends Fragment {
             String allergenID = Product.list.get(ean).getIngredients().get(key).getAllergenID();
             if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID)) {
                 allergens.put(allergenID, Allergen.list.get(allergenID).getAllergen());
-                isEatableIngredient = true;
+                badStuff += Allergen.list.get(allergenID).getAllergen();
+                isEatableIngredient = false;
             }
-            else if(!allergenID.equals("0") && Diet.allAllergens.containsKey(allergenID))
+            else if(!allergenID.equals("0") && Diet.allAllergens.containsKey(allergenID) && isEatableIngredient)
                 //Checking if the product have an allergen that isn't the one with and ID of 0 (None).
                 isEatableIngredient = true;
             else
-                isEatableIngredient = false;
+                isEatableIngredient = true;
 
             //Changing the text if the item contains something the user should not eat
             if(isEatableIngredient && Diet.allAllergens.containsKey(allergenID))
-                name = "<font color='#ab011e'>" + name + "("+ Allergen.list.get(allergenID).getAllergen() +")</font>";
+                badStuff += Allergen.list.get(allergenID).getAllergen();
             //Checking if the product is marked as eatable or not
-            if(isEatableIngredient && isEatable)
+            if(!isEatableIngredient && isEatable)
                 isEatable = false;
 
             /**
              * Sources
              */
-            //TODO: !!
+            //Building list of found allergens in this product if it is something the user can't eat.
+            String sourceID = Product.list.get(ean).getIngredients().get(key).getSourceID();
+            if(Diet.allSources.containsKey(sourceID) && !sources.containsKey(sourceID)) {
+                sources.put(allergenID, Source.list.get(sourceID).getSource());
+                badStuff += Source.list.get(sourceID).getSource();
+                isEatableIngredient = false;
+            }
+            else if(Diet.allSources.containsKey(allergenID) && isEatableIngredient)
+                //Checking if the product have an allergen that isn't the one with and ID of 0 (None).
+                isEatableIngredient = true;
+
+            //Changing the text if the item contains something the user should not eat
+            if(isEatableIngredient && Diet.allSources.containsKey(sourceID))
+                badStuff += Source.list.get(sourceID).getSource();
+            //Checking if the product is marked as eatable or not
+            if(!isEatableIngredient && isEatable)
+                isEatable = false;
             /**
              * Types
              */
-            //TODO: !!
+            //Building list of found allergens in this product if it is something the user can't eat.
+            String typeID = Product.list.get(ean).getIngredients().get(key).getTypeID();
+            if(Diet.allTypes.containsKey(typeID) && !sources.containsKey(typeID)) {
+                types.put(typeID, Type.list.get(typeID).getIngredientType());
+                badStuff += Type.list.get(typeID).getIngredientType();
+                isEatableIngredient = false;
+            }
+            else if(Diet.allTypes.containsKey(typeID) && isEatableIngredient)
+                //Checking if the product have an allergen that isn't the one with and ID of 0 (None).
+                isEatableIngredient = true;
+
+            //Changing the text if the item contains something the user should not eat
+            if(isEatableIngredient && Diet.allTypes.containsKey(typeID))
+                badStuff += Type.list.get(typeID).getIngredientType();
+            //Checking if the product is marked as eatable or not
+            if(!isEatableIngredient && isEatable)
+                isEatable = false;
 
             /**
              * Adding and formatting a string of ingredients
              */
+            if(!isEatableIngredient)
+                name = "<font color='#f15348'>" + name + "("+ badStuff +")</font>";
             if(i == 0){
                 //Adding the first ingredient
                 ingredientText += name.toUpperCase().subSequence(0,1)
@@ -175,6 +213,11 @@ public class ResultFragment extends Fragment {
             eatableIcon.setImageResource(R.drawable.iseatable);
         else
             eatableIcon.setImageResource(R.drawable.uneatable);
+    }
+
+    private String fixGrammar(String[] text){
+        String result ="";
+        return result;
     }
 
     //Async to allow download on a thread other than main thread
@@ -223,6 +266,23 @@ public class ResultFragment extends Fragment {
             if(!result.isNull("ean")){
                 getProduct(result);
                 //getJsonObject(result);
+            }else if(Vars.ean.length() <= 0){
+                //Opening a dialog box if product don't exsist in DB
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.choose_a_product_first_title)//R.string.product_does_not_exist_title)
+                        .setMessage(R.string.choose_a_product_first)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int which){
+                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).addToBackStack(null).commit();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Logic
+                            }
+                        })
+                        .setIcon(R.drawable.logo)
+                        .show();
             }else{
                 //Opening a dialog box if product don't exsist in DB
                 new AlertDialog.Builder(getContext())
@@ -238,7 +298,7 @@ public class ResultFragment extends Fragment {
                                 //Logic
                             }
                         })
-                        .setIcon(R.drawable.ic_menu_manage)
+                        .setIcon(R.drawable.logo)
                         .show();
             }
         }

@@ -95,4 +95,8 @@
     <string name="add_product_fragment_title">Legg til produkt</string>
     <string name="company_name">Produsentens navn</string>
     <string name="diet_name">Diett navn</string>
+    <string name="new_user_title">Velkommen til eatable!</string>
+    <string name="welcome_message">For å kunne få tilbakemelding på et produkt, basert på dine diettbehov, må du legge til en eller flere dietter i mine dietter. Ønsker du å gjøre det nå?</string>
+    <string name="choose_a_product_first_title">Ingen produkt er valgt</string>
+    <string name="choose_a_product_first">Du må velge et produkt før du kan se det forrige valgte produktet. Vil du søke etter eller skanne et produkt?</string>
 </resources>

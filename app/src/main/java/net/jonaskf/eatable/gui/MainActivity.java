@@ -1,6 +1,8 @@
 package net.jonaskf.eatable.gui;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -98,8 +100,21 @@ public class MainActivity extends AppCompatActivity
     public void loadUserPrefs(){
         //Loading user prefs if they exsist, if not opening the my diets window.
         if(!Persistence.loadUserPrefs(this))
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
-
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.new_user_title)//R.string.product_does_not_exist_title)
+                    .setMessage(R.string.welcome_message)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyDietFragment(), Vars._MY_DIETS_FRAGMENT).addToBackStack(null).commit();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Logic
+                        }
+                    })
+                    .setIcon(R.drawable.logo)
+                    .show();
     }
 
     @Override

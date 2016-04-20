@@ -12,7 +12,7 @@
             android:title="@string/show_result" />
         <item
             android:id="@+id/diet_settings"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/menu_icon"
             android:title="@string/my_diets" />
     </group>
 
