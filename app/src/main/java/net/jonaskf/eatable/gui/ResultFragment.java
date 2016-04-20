@@ -19,6 +19,7 @@ import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Ingredient;
 import net.jonaskf.eatable.product.Product;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
@@ -290,6 +291,7 @@ public class ResultFragment extends Fragment {
                         .setMessage(R.string.product_does_not_exist_msg)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int which){
+                                Ingredient.list.clear();
                                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddProductFragment(), Vars._ADD_PRODUCT_FRAGMENT).addToBackStack(null).commit();
                             }
                         })

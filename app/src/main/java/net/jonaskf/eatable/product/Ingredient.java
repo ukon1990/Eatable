@@ -12,15 +12,17 @@ import java.util.HashMap;
  * Created by jonas on 22.02.2016.
  */
 public class Ingredient {
+    private String id;
     private String name;
     private String comment;
     private String sourceID;
     private String typeID;
     private String allergenID;
 
+    public static HashMap<String, Ingredient> list = new HashMap<>();
 
-
-    public Ingredient(String name, String comment, String sourceID, String typeID, String allergenID) {
+    public Ingredient(String id, String name, String comment, String sourceID, String typeID, String allergenID) {
+        this.id = id;
         this.name = name;
         this.comment = comment;
         this.sourceID = sourceID;
@@ -28,21 +30,21 @@ public class Ingredient {
         this.allergenID = allergenID;
     }
 
-    public String getAllergenID() {
-        return allergenID;
+    public String getId(){
+        return name;
     }
     public String getName() {
         return name;
     }
-
+    public String getAllergenID() {
+        return allergenID;
+    }
     public String getComment() {
         return comment;
     }
-
     public String getSourceID() {
         return sourceID;
     }
-
     public String getTypeID() {
         return typeID;
     }
@@ -55,6 +57,7 @@ public class Ingredient {
                 ingredients.put(
                         obj.getString("ingredientID"),
                         new Ingredient(
+                                obj.getString("ingredientID"),
                                 obj.getString("name"),
                                 obj.getString("comment"),
                                 obj.getString("sourceID"),
