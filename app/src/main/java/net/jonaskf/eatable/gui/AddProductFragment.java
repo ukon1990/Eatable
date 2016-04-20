@@ -3,6 +3,7 @@ package net.jonaskf.eatable.gui;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,22 +33,24 @@ public class AddProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("test", "her er jeg");
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_my_diet, container, false);
+        view = inflater.inflate(R.layout.fragment_add_product, container, false);
         //Changing actionbar title
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_diets_title);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.add_product_fragment_title);
 
         //The list
-        listView = (ListView) view.findViewById(R.id.my_diet_list);
-        showMyDiets();
+        //listView = (ListView) view.findViewById(R.id.my_diet_list);
+        //showMyDiets();
 
         //On click listener for in-fragment method
+        /*
         view.findViewById(R.id.add_diet_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddDietFragment(), Vars._ADD_DIET_FRAGMENT).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddProductFragment(), Vars._ADD_PRODUCT_FRAGMENT).addToBackStack(null).commit();
             }
-        });
+        });*/
         return view;
     }
 
