@@ -35,9 +35,16 @@ public class EatableWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             Intent intent = new Intent (context, MainActivity.class);
             //TODO: Se på seinere...  - PendingIntent pendingIntent = PendingIntent().getActivity(context, 0, intent,0);
-
+            // SO: http://stackoverflow.com/questions/23220757/android-widget-onclick-listener-for-several-buttons
+            // Doc: http://developer.android.com/reference/android/widget/Button.html
+            Log.d("widget","widget-> " + appWidgetId);
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+    }
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
     }
 
     @Override

@@ -107,4 +107,6 @@
     <string name="sources">Kilder</string>
     <string name="allergens">Allergener</string>
     <string name="types">Typer</string>
+    <string name="produced_by">Produsert av</string>
+    <string name="last_updated">Sist oppdatert</string>
 </resources>

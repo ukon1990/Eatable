@@ -20,6 +20,7 @@ import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Ingredient;
+import net.jonaskf.eatable.product.Producer;
 import net.jonaskf.eatable.product.Product;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
@@ -49,6 +50,8 @@ public class ResultFragment extends Fragment {
     private View view;
     private TextView productIngredients; //For the product ingredients
     private TextView productAllergens;
+    private TextView producer;
+    private TextView lastUpdated;
     private ImageView eatableIcon;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +64,8 @@ public class ResultFragment extends Fragment {
         //Initiatin some default text
         productIngredients = ((TextView) view.findViewById(R.id.ingredient_list));
         productAllergens = ((TextView) view.findViewById(R.id.product_acceptance));
+        producer = (TextView) view.findViewById(R.id.producer_nametag);
+        lastUpdated = (TextView) view.findViewById(R.id.last_updated_tag);
         eatableIcon = ((ImageView) view.findViewById(R.id.is_eatable_icon));
         //Changing actionbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.result_fragment_title);
@@ -247,6 +252,15 @@ public class ResultFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Product.list.get(ean).getName());
         String start = "<![CDATA[";
         String end ="]]>";
+
+
+
+        producer.setText(
+                Html.fromHtml(
+                        "<strong>" + getString(R.string.produced_by) + "</strong>: " +
+                        Producer.list.get(Product.list.get(ean).getProducerID()).getName().toUpperCase().substring(0,1) +
+                        Producer.list.get(Product.list.get(ean).getProducerID()).getName().substring(1)));
+        lastUpdated.setText(Html.fromHtml("<strong>" + getString(R.string.last_updated) + "</strong>: "+ Product.list.get(ean).getLastUpdated()));
         if(allergenText.length()>0)
             productAllergens.setText(Html.fromHtml(allergenText));
         productIngredients.setText(Html.fromHtml(ingredientText));

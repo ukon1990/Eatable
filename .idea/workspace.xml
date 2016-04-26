@@ -25,29 +25,14 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="widget" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d45af0a6-dd38-4bff-8c33-17a574404215" name="Default" comment="Ingredienser vises nå i &quot;legg til produkt&quot; listen + produktet viser nå ingredienser som synes.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/product/Producer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/multidex_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/multidex_instrumentation_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_instrumentation_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/zxing_android_embedded_3_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/zxing_android_embedded_3_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="d45af0a6-dd38-4bff-8c33-17a574404215" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/adapter/ProductAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/adapter/ProductAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/global/Vars.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/global/Vars.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/AddProductFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/AddProductFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/SearchFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/SearchFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/product/Product.java" afterPath="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/product/Product.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_product.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_product.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_result.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_result.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
@@ -90,7 +75,61 @@
     <favorites_list name="Eatable" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="EatableWidget.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_result.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_result.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.6603775">
+              <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
+              <folding>
+                <element signature="e#1032#1057#0" expanded="true" />
+                <element signature="e#1135#1172#0" expanded="true" />
+                <element signature="e#1465#1490#0" expanded="true" />
+                <element signature="e#2096#2128#0" expanded="true" />
+                <element signature="e#2154#2191#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResultFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.14769231">
+              <caret line="236" column="43" selection-start-line="236" selection-start-column="43" selection-end-line="236" selection-end-column="43" />
+              <folding>
+                <element signature="e#2319#2349#0" expanded="true" />
+                <element signature="e#8441#8470#0" expanded="true" />
+                <element signature="e#9211#9238#0" expanded="true" />
+                <element signature="e#9959#9984#0" expanded="true" />
+                <element signature="e#10928#10959#0" expanded="true" />
+                <element signature="e#11262#11294#0" expanded="true" />
+                <element signature="e#13895#13932#0" expanded="true" />
+                <element signature="e#14010#14041#0" expanded="true" />
+                <element signature="e#14086#14098#0" expanded="true" />
+                <element signature="e#14504#14515#0" expanded="true" />
+                <element signature="e#15084#15119#0" expanded="true" />
+                <element signature="e#15164#15176#0" expanded="true" />
+                <element signature="e#15648#15659#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1776,7 +1815,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/nav_header_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/MyDietFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/eatable_widget.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_ingredient.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/AddIngredientFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/adapter/IngredientAdapter.java" />
@@ -1790,8 +1828,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/SearchFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/AddProductFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_result.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java" />
       </list>
     </option>
   </component>
@@ -2411,12 +2450,18 @@
       <option name="project" value="LOCAL" />
       <updated>1461669269893</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="lagt inn produsenter osv">
+      <created>1461709240369</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1461709240369</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275862" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2424,7 +2469,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31237322" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31237322" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -2472,7 +2517,8 @@
     <MESSAGE value="byttet ikoner, fikset litt på håndtering av dietter + bakgrunnsbilde" />
     <MESSAGE value="fixefixe" />
     <MESSAGE value="Ingredienser vises nå i &quot;legg til produkt&quot; listen + produktet viser nå ingredienser som synes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ingredienser vises nå i &quot;legg til produkt&quot; listen + produktet viser nå ingredienser som synes." />
+    <MESSAGE value="lagt inn produsenter osv" />
+    <option name="LAST_COMMIT_MESSAGE" value="lagt inn produsenter osv" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2729,13 +2775,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62403697">
-          <caret line="36" column="40" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2912,23 +2951,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/EatableWidget.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-45.851852">
-          <caret line="234" column="42" selection-start-line="234" selection-start-column="42" selection-end-line="234" selection-end-column="42" />
-          <folding>
-            <element signature="e#2062#2092#0" expanded="true" />
-            <element signature="e#8184#8213#0" expanded="true" />
-            <element signature="e#8954#8981#0" expanded="true" />
-            <element signature="e#9702#9727#0" expanded="true" />
-            <element signature="e#13115#13152#0" expanded="true" />
-            <element signature="e#13230#13261#0" expanded="true" />
-            <element signature="e#13306#13318#0" expanded="true" />
-            <element signature="e#13724#13735#0" expanded="true" />
-            <element signature="e#14304#14339#0" expanded="true" />
-            <element signature="e#14384#14396#0" expanded="true" />
-            <element signature="e#14868#14879#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2937,10 +2964,36 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40201005">
-          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+        <state vertical-scroll-proportion="-5.6603775">
+          <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
           <folding>
-            <element signature="e#584#609#0" expanded="true" />
+            <element signature="e#1032#1057#0" expanded="true" />
+            <element signature="e#1135#1172#0" expanded="true" />
+            <element signature="e#1465#1490#0" expanded="true" />
+            <element signature="e#2096#2128#0" expanded="true" />
+            <element signature="e#2154#2191#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/net/jonaskf/eatable/gui/ResultFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14769231">
+          <caret line="236" column="43" selection-start-line="236" selection-start-column="43" selection-end-line="236" selection-end-column="43" />
+          <folding>
+            <element signature="e#2319#2349#0" expanded="true" />
+            <element signature="e#8441#8470#0" expanded="true" />
+            <element signature="e#9211#9238#0" expanded="true" />
+            <element signature="e#9959#9984#0" expanded="true" />
+            <element signature="e#10928#10959#0" expanded="true" />
+            <element signature="e#11262#11294#0" expanded="true" />
+            <element signature="e#13895#13932#0" expanded="true" />
+            <element signature="e#14010#14041#0" expanded="true" />
+            <element signature="e#14086#14098#0" expanded="true" />
+            <element signature="e#14504#14515#0" expanded="true" />
+            <element signature="e#15084#15119#0" expanded="true" />
+            <element signature="e#15164#15176#0" expanded="true" />
+            <element signature="e#15648#15659#0" expanded="true" />
           </folding>
         </state>
       </provider>
