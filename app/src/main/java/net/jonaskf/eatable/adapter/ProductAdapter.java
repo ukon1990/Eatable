@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
+import net.jonaskf.eatable.product.Producer;
 import net.jonaskf.eatable.product.Product;
 
 /**
@@ -31,11 +32,15 @@ public class ProductAdapter extends ArrayAdapter<Product>{
         TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
         Product product = getItem(pos);
+
+        //Just to make sure that the company name starts with a uppercase letter
+        String companyName = Producer.list.get(product.getProducerID()).getName().toUpperCase().subSequence(0,1) +
+                             Producer.list.get(product.getProducerID()).getName().substring(1);
         if(nameTW != null)
             nameTW.setText(product.getName());
-        //if(companyTW != null)
-            //companyTW.setText(product.getCompany);
-        //Log.d("test", product.getName());
+        if(companyTW != null)
+            companyTW.setText(companyName);
+
         return view;
     }
 }

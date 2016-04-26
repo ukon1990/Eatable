@@ -17,6 +17,8 @@ import android.widget.ListView;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.ProductAdapter;
 import net.jonaskf.eatable.global.Vars;
+import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Producer;
 import net.jonaskf.eatable.product.Product;
 
 import org.json.JSONArray;
@@ -79,15 +81,18 @@ public class SearchFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultFragment(), Vars._RESULT_FRAGMENT).addToBackStack(null).commit();
             }
         });
-        productSearch("");
+
+        getAllProducers();
         return view;
     }
 
+    public void getAllProducers(){
+        DownloadProducers dl = new DownloadProducers();
+        dl.execute(Vars.GET_PRODUCERS);
+    }
     /**
      * Searching the db
      */
-
-
     private void productSearch(String query){
         DownloadProduct dl = new DownloadProduct();
         dl.execute(Vars.GET_PRODUCTS + Vars.Q_SEARCH + query);
@@ -139,15 +144,62 @@ public class SearchFragment extends Fragment {
                             new Product(
                                 ((JSONObject) jArr.get(i)).getString("productID"),
                                 ((JSONObject) jArr.get(i)).getString("productName"),
-                            null,
-                            null
+                                null,
+                                null,
+                                ((JSONObject) jArr.get(i)).getString("last_updated"),
+                                ((JSONObject) jArr.get(i)).getString("producerID")
                         ) );
                 } catch (JSONException e) {
+                    Log.d("test", result.toString());
                     e.printStackTrace();
                 }
                 //Log.d("test", resultList.get(i).getName()+ " size -> " + resultList.size());
             }
             productSearchResult();
+        }
+    }
+
+    //Producers
+    private class DownloadProducers extends AsyncTask<String, Integer, JSONArray> {
+        @Override
+        protected JSONArray doInBackground(String... urls) {
+            URLConnection uConn;
+            try{
+                //Getting that data
+                URL url = new URL(urls[0]);
+                uConn = url.openConnection();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(uConn.getInputStream(), "UTF-8")
+                );
+
+                JSONArray obj = new JSONArray();
+                try {
+                    obj= new JSONArray(in.readLine());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                in.close();
+                return obj;
+            }catch(IOException ex){
+                ex.printStackTrace();
+                Log.d("Download", "Failed! :(");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(JSONArray result){
+            Producer.list.clear();
+            //populating the producer list
+            JSONArray jArr = result;
+            for(int i = 0; i < jArr.length(); i++) {
+                try {
+                    Producer.addProducer((JSONObject) jArr.get(i));
+                    Log.d("test", result.toString() + " size - " + Producer.list.size());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            productSearch("");
         }
     }
 }

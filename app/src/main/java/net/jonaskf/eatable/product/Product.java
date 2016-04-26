@@ -16,17 +16,21 @@ public class Product {
     private String id;
     private String name;
     private String comment;
+    private String lastUpdated;
+    private String producerID;
 
     private HashMap<String, Ingredient> ingredients = new HashMap<>();
 
     //product list
     public static HashMap<String, Product> list = new HashMap<>();
 
-    public Product(String id, String name, String comment, HashMap<String, Ingredient> ingredients) {
+    public Product(String id, String name, String comment, HashMap<String, Ingredient> ingredients, String lastUpdated, String producerID) {
         this.id = id;
         this.name = name;
         this.comment = comment;
         this.ingredients = ingredients;
+        this.lastUpdated = lastUpdated;
+        this.producerID = producerID;
     }
 
     public String getId() {
@@ -38,8 +42,13 @@ public class Product {
     }
 
     public String getComment() {
-
         return comment;
+    }
+    public String getLastUpdated(){
+        return lastUpdated;
+    }
+    public String getProducerID(){
+        return producerID;
     }
 
     public HashMap<String, Ingredient> getIngredients() {
@@ -55,7 +64,9 @@ public class Product {
                         obj.getString("ean"),
                         obj.getString("productName"),
                         "",//TODO: add in DB -> obj.getString("comment"),
-                        ingredients
+                        ingredients,
+                        obj.getString("lastUpdated"),
+                        obj.getString("producerID")
                     )
             );
         }catch(JSONException e){e.printStackTrace();}

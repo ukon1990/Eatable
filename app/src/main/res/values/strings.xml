@@ -102,4 +102,9 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="add_product_ingredient_fragment">Legg til ingrediens</string>
+    <string name="conflicts_title">I konflikt med din diett</string>
+    <string name="source">Kilde</string>
+    <string name="sources">Kilder</string>
+    <string name="allergens">Allergener</string>
+    <string name="types">Typer</string>
 </resources>

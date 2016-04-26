@@ -88,6 +88,8 @@ public class ResultFragment extends Fragment {
         boolean isEatable = true;
         String ean = Vars.ean;
         String allergenText = "";
+        String sourceText = "";
+        String typeText = "";
         String ingredientText ="";
         HashMap<String, String> allergens = new HashMap<>();
         HashMap<String, String> sources = new HashMap<>();
@@ -109,6 +111,9 @@ public class ResultFragment extends Fragment {
              */
             //Building list of found allergens in this product if it is something the user can't eat.
             String allergenID = Product.list.get(ean).getIngredients().get(key).getAllergenID();
+
+            Log.d("allergen","The size is: " + Allergen.list.size());
+
             if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID)) {
                 allergens.put(allergenID, Allergen.list.get(allergenID).getAllergen());
                 badStuff += Allergen.list.get(allergenID).getAllergen();
@@ -133,7 +138,7 @@ public class ResultFragment extends Fragment {
             //Building list of found allergens in this product if it is something the user can't eat.
             String sourceID = Product.list.get(ean).getIngredients().get(key).getSourceID();
             if(Diet.allSources.containsKey(sourceID) && !sources.containsKey(sourceID)) {
-                sources.put(allergenID, Source.list.get(sourceID).getSource());
+                sources.put(sourceID, Source.list.get(sourceID).getSource());
                 badStuff += Source.list.get(sourceID).getSource();
                 isEatableIngredient = false;
             }
@@ -188,6 +193,7 @@ public class ResultFragment extends Fragment {
         }
         //Building allergen string
         if(allergens.size() != 0){
+            allergenText += "<strong>"+getString(R.string.allergens) + "</strong>: ";
             int c = allergens.size();
             for(String a : allergens.keySet()){
                 if(allergens.size() > 0){
@@ -203,10 +209,46 @@ public class ResultFragment extends Fragment {
             }
             allergens.clear();
         }
+        if(sources.size() != 0){
+            allergenText += "<br />" + "<strong>" + getString(R.string.sources) + "</strong>: ";
+            int c = sources.size();
+            for(String a : sources.keySet()){
+                if(sources.size() > 0){
+                    if(c == sources.size()){
+                        allergenText += sources.get(a).toUpperCase().substring(0,1) + sources.get(a).substring(1) + (c == 1 ? ".":"");
+                    }else if(c == 1){
+                        allergenText += " og " + sources.get(a) + ".";
+                    }else {
+                        allergenText += ", " + sources.get(a);
+                    }
+                    c--;
+                }
+            }
+            sources.clear();
+        }
+        if(types.size() != 0){
+            allergenText += "<br />" + "<strong>" + getString(R.string.types) + "</strong>: ";
+            int c = types.size();
+            for(String a : types.keySet()){
+                if(sources.size() > 0){
+                    if(c == sources.size()){
+                        allergenText += types.get(a).toUpperCase().substring(0,1) + types.get(a).substring(1) + (c == 1 ? ".":"");
+                    }else if(c == 1){
+                        allergenText += " og " + types.get(a) + ".";
+                    }else {
+                        allergenText += ", " + types.get(a);
+                    }
+                    c--;
+                }
+            }
+            sources.clear();
+        }
         //Setting text label & actionbar content
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Product.list.get(ean).getName());
+        String start = "<![CDATA[";
+        String end ="]]>";
         if(allergenText.length()>0)
-            productAllergens.setText(allergenText);
+            productAllergens.setText(Html.fromHtml(allergenText));
         productIngredients.setText(Html.fromHtml(ingredientText));
 
         //Changing eatable img

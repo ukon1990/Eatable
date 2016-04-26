@@ -19,6 +19,7 @@ public class Vars {
 
     //URLs
     public static final String GET_PRODUCTS ="http://frigg.hiof.no/android_v165/api/GetProducts.php?";
+    public static final String GET_PRODUCERS = "http://frigg.hiof.no/android_v165/api/GetProducer.php?";
     public static final String GET_ALLERGENS ="http://frigg.hiof.no/android_v165/api/GetAllergens.php?";
     public static final String GET_SOURCES = "http://frigg.hiof.no/android_v165/api/GetSources.php?";
     public static final String GET_TYPES = "http://frigg.hiof.no/android_v165/api/GetTypes.php?";

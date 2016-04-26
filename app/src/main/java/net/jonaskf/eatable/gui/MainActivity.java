@@ -30,6 +30,7 @@ import net.jonaskf.eatable.global.Lists;
 import net.jonaskf.eatable.global.Persistence;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Producer;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
 
@@ -258,12 +259,12 @@ public class MainActivity extends AppCompatActivity
                             ((JSONObject) jArr.get(i)).getString("allergenid"),
                             new Allergen(((JSONObject) jArr.get(i)).getString("allergen"))
                     );
-
-
                 } catch (JSONException e) {
+                    Log.d("allergen", "failed - " + result.toString());
                     e.printStackTrace();
                 }
             }
+            Log.d("allergen","Hei -> " + Allergen.list.get("5").getAllergen());
         }
     }
     //Sources

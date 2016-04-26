@@ -29,8 +29,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp"
         android:gravity="center"/>
-    <AutoCompleteTextView
-        android:id="@+id/product_name_tw"
+    <EditText
+        android:id="@+id/product_name_et"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/product_ean_label"
@@ -50,7 +50,7 @@
         android:layout_below="@id/product_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/add_product">
+        android:layout_above="@id/add_product">
         <Button
             android:id="@+id/add_ingredient_btn"
             android:layout_width="wrap_content"

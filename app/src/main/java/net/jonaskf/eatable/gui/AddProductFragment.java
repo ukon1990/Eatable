@@ -6,13 +6,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.IngredientAdapter;
@@ -30,6 +34,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class AddProductFragment extends Fragment {
@@ -39,6 +45,11 @@ public class AddProductFragment extends Fragment {
     private IngredientAdapter adapter;
     private Button addIngredient;
     private Button addProduct;
+    private TextView eanCode;
+    private EditText editText;
+
+    private String productName;
+    private String comment ="";
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -55,11 +66,35 @@ public class AddProductFragment extends Fragment {
         //Buttons
         addIngredient = (Button) view.findViewById(R.id.add_ingredient_btn);
         addProduct = (Button) view.findViewById(R.id.add_product);
-
         //List
         listView = (ListView) view.findViewById(R.id.ingredient_list);
-        //Click listeners
+        //Textview
+        eanCode = (TextView) view.findViewById(R.id.product_ean);
+        eanCode.setText(Vars.ean);
 
+        //EditText
+        editText = (EditText) view.findViewById(R.id.product_name_et);
+        editText.addTextChangedListener(new TextWatcher(){
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                productName = editText.getText().toString();
+                Log.d("test", "name: " + productName);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                productName = editText.getText().toString();
+                Log.d("test", "name: " + productName);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                productName = editText.getText().toString();
+                Log.d("test", "name: " + productName);
+            }
+        });
+        //Click listeners
         addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,18 +130,37 @@ public class AddProductFragment extends Fragment {
             URLConnection uConn;
             try{
                 String reply ="";
+                String date = new SimpleDateFormat("dd/MM-yy").format(Calendar.getInstance().getTime());
+                String producerID = "1";//TODO -> Allow the user to select!
+                Log.d("test", "Date: "+date);
+                /**
+                 * Adding the product to DB
+                 */
+                String statement = "INSERT INTO product VALUES (" + Vars.ean + ",\""+ productName +"\",\""+ comment + "\",\"" + date + "\",\"" + producerID + "\");";
+                //Getting that data
+                URL url = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
+                uConn = url.openConnection();
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(uConn.getInputStream(), "UTF-8")
+                );
+                Log.d("test", Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
+                reply += productName + " " + in.readLine() + "\n";
+                in.close();
+
+                /**
+                 * Adding the ingredients to DB
+                 */
                 //Looping throught each ingredient to add it into the product in the DB
                 for(String key : Ingredient.list.keySet()){
-                    String statement = "INSERT INTO product_has_ingredient VALUES (" + Vars.ean + ","+ key +");";
+                    statement = "INSERT INTO product_has_ingredient VALUES (" + Vars.ean + ","+ key +");";
                     //Getting that data
-                    URL url = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
+                    url = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
                     uConn = url.openConnection();
-                    BufferedReader in = new BufferedReader(
+                    in = new BufferedReader(
                             new InputStreamReader(uConn.getInputStream(), "UTF-8")
                     );
-                    reply += in.readLine() + "\n";
+                    reply += Ingredient.list.get(key).getName() + " " + in.readLine() + "\n";
                     Log.d("test", Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
-                    Log.d("test", reply);
                     in.close();
                 }
                 return reply;
