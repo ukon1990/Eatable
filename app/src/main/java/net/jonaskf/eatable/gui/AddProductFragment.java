@@ -16,6 +16,10 @@ import net.jonaskf.eatable.adapter.IngredientAdapter;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Ingredient;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -58,10 +62,33 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Logic for adding ingredient to list
-                String statement = "";
                 try {
-                    URL query = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement);
+                    //TODO: http://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
+                    for(String key : Ingredient.list.keySet()){
+                        //Looping throught each in gredient to add it into the product in the DB
+                        String statement = "INSERT INTO product_has_ingredient VALUES (" + Vars.ean + ","+ key +")";
+                        URL query = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement);
+                        HttpURLConnection con = (HttpURLConnection) query.openConnection();
+                        con.setRequestMethod("GET");
+                        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+                        System.out.println("Query -> " + statement);
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(con.getInputStream()));
+                        String inputLine;
+                        StringBuffer response = new StringBuffer();
+
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+
+                        //print result
+                        System.out.println(response.toString());
+
+                    }
                 } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
