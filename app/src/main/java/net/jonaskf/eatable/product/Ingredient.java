@@ -31,7 +31,7 @@ public class Ingredient {
     }
 
     public String getId(){
-        return name;
+        return id;
     }
     public String getName() {
         return name;

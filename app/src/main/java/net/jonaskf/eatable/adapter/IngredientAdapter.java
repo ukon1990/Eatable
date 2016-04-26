@@ -13,10 +13,8 @@ import android.widget.TextView;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.gui.AddIngredientFragment;
 import net.jonaskf.eatable.product.Ingredient;
-import net.jonaskf.eatable.product.Source;
-import net.jonaskf.eatable.product.Type;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
 
 /**
  * Created by jonas on 10.04.16.
@@ -56,6 +53,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         //TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
         final Ingredient ingredient = getItem(pos);
+        Log.d("test", "name " + ingredient.getName() + " has id " + ingredient.getId());
 
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,19 +64,20 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
 
         btnIcon(ingredient, imgBtn);
         if(nameTW != null)
-            nameTW.setText(ingredient.getId());
+            nameTW.setText(ingredient.getName());
         return view;
     }
 
     public void addItem(Ingredient ingredient, ImageButton imgBtn){
         clickedBtn = imgBtn;
         clickedIngredient = ingredient;
-        if(!Diet.list.containsKey(ingredient.getId())){
-            DownloadDiet dl = new DownloadDiet();
+        if(!Ingredient.list.containsKey(ingredient.getId())){
+            DownloadIngredient dl = new DownloadIngredient();
             dl.execute(Vars.GET_INGREDIENTS + Vars.Q_ID + ingredient.getId());
         }else{
-            Diet.list.remove(ingredient.getId());
+            Ingredient.list.remove(ingredient.getId());
         }
+        Log.d("test", "Clicked val -> " + ingredient.getId() + "(" + ingredient.getName() +") "+ clickedIngredient.getId() + "(" + clickedIngredient.getName() +")");
         btnIcon();
     }
 
@@ -93,7 +92,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         }
     }
     private void btnIcon(Ingredient ingredient, ImageButton imgBtn){
-        if(Diet.list.containsKey(ingredient.getId())) {
+        if(Ingredient.list.containsKey(ingredient.getId())) {
             imgBtn.setImageResource(android.R.drawable.ic_menu_delete);
             imgBtn.setBackgroundColor(Vars.MILD_RED);
         }
@@ -104,7 +103,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     }
 
 
-    private class DownloadDiet extends AsyncTask<String, Integer, JSONArray> {
+    private class DownloadIngredient extends AsyncTask<String, Integer, JSONArray> {
         @Override
         protected JSONArray doInBackground(String... urls) {
             URLConnection uConn;
@@ -134,6 +133,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         protected void onPostExecute(JSONArray result){
             //populating
             JSONArray jArr = result;
+            Log.d("test", "Size of jarr: " + jArr.length());
             for(int i = 0; i < jArr.length(); i++) {
                 try {
                     Ingredient.list.put(
@@ -146,8 +146,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
                                     ((JSONObject) jArr.get(i)).getString("typeID"),
                                     ((JSONObject) jArr.get(i)).getString("allergenid")
                             ));
-                    //Updating the lists in the Diet class
-                    Diet.updateLists();
+                    Log.d("test", "The size of the ingredients is: " + Ingredient.list.size() + ". This was " + ((JSONObject) jArr.get(i)).getString("name") + " - " + ((JSONObject) jArr.get(i)).getString("ingredientID"));
                     btnIcon();
 
                 } catch (JSONException e) {

@@ -7,16 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
-import net.jonaskf.eatable.adapter.DietAdapter;
 import net.jonaskf.eatable.adapter.IngredientAdapter;
-import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Ingredient;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 public class AddProductFragment extends Fragment {
@@ -24,6 +25,8 @@ public class AddProductFragment extends Fragment {
     private SearchView searchView;
     private ListView listView;
     private IngredientAdapter adapter;
+    private Button addIngredient;
+    private Button addProduct;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -33,24 +36,39 @@ public class AddProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("test", "her er jeg");
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_product, container, false);
         //Changing actionbar title
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.add_product_fragment_title);
+        //Buttons
+        addIngredient = (Button) view.findViewById(R.id.add_ingredient_btn);
+        addProduct = (Button) view.findViewById(R.id.add_product);
 
-        //The list
-        //listView = (ListView) view.findViewById(R.id.my_diet_list);
-        //showMyDiets();
+        //List
+        listView = (ListView) view.findViewById(R.id.ingredient_list);
+        //Click listeners
 
-        //On click listener for in-fragment method
-        /*
-        view.findViewById(R.id.add_diet_btn).setOnClickListener(new View.OnClickListener() {
+        addIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddProductFragment(), Vars._ADD_PRODUCT_FRAGMENT).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddIngredientFragment(), Vars._ADD_INGREDIENT_FRAGMENT).addToBackStack(null).commit();
             }
-        });*/
+        });
+        addProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Logic for adding ingredient to list
+                String statement = "";
+                try {
+                    URL query = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //Populating the list with current ingredients
+        showMyDiets();
         return view;
     }
 
@@ -60,5 +78,4 @@ public class AddProductFragment extends Fragment {
         listView.setAdapter(adapter);
         adapter.addAll(Ingredient.list.values());
     }
-
 }
