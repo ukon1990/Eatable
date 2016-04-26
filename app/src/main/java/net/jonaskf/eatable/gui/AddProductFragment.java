@@ -1,5 +1,8 @@
 package net.jonaskf.eatable.gui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +19,17 @@ import net.jonaskf.eatable.adapter.IngredientAdapter;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Ingredient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 
 public class AddProductFragment extends Fragment {
@@ -62,35 +70,8 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Logic for adding ingredient to list
-                try {
-                    //TODO: http://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
-                    for(String key : Ingredient.list.keySet()){
-                        //Looping throught each in gredient to add it into the product in the DB
-                        String statement = "INSERT INTO product_has_ingredient VALUES (" + Vars.ean + ","+ key +")";
-                        URL query = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement);
-                        HttpURLConnection con = (HttpURLConnection) query.openConnection();
-                        con.setRequestMethod("GET");
-                        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-                        System.out.println("Query -> " + statement);
-                        BufferedReader in = new BufferedReader(
-                                new InputStreamReader(con.getInputStream()));
-                        String inputLine;
-                        StringBuffer response = new StringBuffer();
-
-                        while ((inputLine = in.readLine()) != null) {
-                            response.append(inputLine);
-                        }
-                        in.close();
-
-                        //print result
-                        System.out.println(response.toString());
-
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                DownloadIngredient dl = new DownloadIngredient();
+                dl.execute("");
             }
         });
 
@@ -104,5 +85,55 @@ public class AddProductFragment extends Fragment {
 
         listView.setAdapter(adapter);
         adapter.addAll(Ingredient.list.values());
+    }
+
+
+
+    private class DownloadIngredient extends AsyncTask<String, Integer, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            URLConnection uConn;
+            try{
+                String reply ="";
+                //Looping throught each ingredient to add it into the product in the DB
+                for(String key : Ingredient.list.keySet()){
+                    String statement = "INSERT INTO product_has_ingredient VALUES (" + Vars.ean + ","+ key +");";
+                    //Getting that data
+                    URL url = new URL(Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
+                    uConn = url.openConnection();
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(uConn.getInputStream(), "UTF-8")
+                    );
+                    reply += in.readLine() + "\n";
+                    Log.d("test", Vars.INSERT_INTO + Vars.Q_KEY + Vars.API_KEY + "&" + Vars.Q_INSERT + statement.replaceAll(" ","%20"));
+                    Log.d("test", reply);
+                    in.close();
+                }
+                return reply;
+            }catch(IOException ex){
+                ex.printStackTrace();
+                Log.d("Download", "Failed! :(");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String reply){
+            new AlertDialog.Builder(getContext())
+                    .setTitle(Vars.ean)//R.string.product_does_not_exist_title)
+                    .setMessage(reply)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            Ingredient.list.clear();
+                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).addToBackStack(null).commit();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Logic
+                        }
+                    })
+                    .setIcon(R.drawable.logo)
+                    .show();
+        }
     }
 }
