@@ -12,16 +12,17 @@ import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.global.Lists;
 import net.jonaskf.eatable.global.Vars;
 import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Source;
 
 /**
- * Created by jonas on 27.04.2016.
+ * Created by jonas on 27.04.16.
  */
-public class AllergenAdapter  extends ArrayAdapter<Allergen> {
+public class SourceAdapter extends ArrayAdapter<Source> {
     private ImageButton clickedBtn;
-    private Allergen clickedAllergen;
+    private Source clickedSource;
 
 
-    public AllergenAdapter (Context context, int resource){
+    public SourceAdapter (Context context, int resource){
         super(context, resource);
     }
 
@@ -40,36 +41,36 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
         TextView nameTW = (TextView) view.findViewById(R.id.diet_row_name);
         //TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
-        final Allergen allergen = getItem(pos);
+        final Source source = getItem(pos);
 
 
 
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem(allergen, imgBtn);
+                addItem(source, imgBtn);
             }
         });
 
-        btnIcon(allergen, imgBtn);
+        btnIcon(source, imgBtn);
         if(nameTW != null)
-            nameTW.setText(allergen.getAllergen());
+            nameTW.setText(source.getSource());
         return view;
     }
 
-    public void addItem(Allergen allergen, ImageButton imgBtn){
+    public void addItem(Source source, ImageButton imgBtn){
         clickedBtn = imgBtn;
-        clickedAllergen = allergen;
-        if(!Lists.customAllergenList.containsKey(allergen.getId())){
-            Lists.customAllergenList.put(allergen.getId(), allergen);
+        clickedSource = source;
+        if(!Lists.customSourceList.containsKey(source.getId())){
+            Lists.customSourceList.put(source.getId(), source);
         }else{
-            Lists.customAllergenList.remove(allergen.getId());
+            Lists.customSourceList.remove(source.getId());
         }
         btnIcon();
     }
 
     private void btnIcon(){
-        if(Lists.customAllergenList.containsKey(clickedAllergen.getId())) {
+        if(Lists.customSourceList.containsKey(clickedSource.getId())) {
             clickedBtn.setImageResource(android.R.drawable.ic_menu_delete);
             clickedBtn.setBackgroundColor(Vars.MILD_RED);
         }
@@ -78,8 +79,8 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
             clickedBtn.setBackgroundColor(Vars.MILD_GREEN);
         }
     }
-    private void btnIcon(Allergen allergen, ImageButton imgBtn){
-        if(Lists.customAllergenList.containsKey(allergen.getId())) {
+    private void btnIcon(Source source, ImageButton imgBtn){
+        if(Lists.customSourceList.containsKey(source.getId())) {
             imgBtn.setImageResource(android.R.drawable.ic_menu_delete);
             imgBtn.setBackgroundColor(Vars.MILD_RED);
         }

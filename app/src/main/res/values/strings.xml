@@ -111,6 +111,11 @@
     <string name="last_updated">Sist oppdatert</string>
     <string name="custom_diet">Lag egendefinert diett</string>
     <string name="add_selected_type_to_diet">Legg til i diett</string>
+    <string name="create_diet">Legg til diett</string>
+    <string name="custom_diet_title">Egendefinert diett</string>
+    <string name="add_allergen_to_custom_diet">Legg til allergen</string>
+    <string name="add_type_to_custom_diet">Legg til type</string>
+    <string name="add_source_to_custom_diet">Legg til kilde</string>
 
     <string-array name="custom_diet_spinner">
         <item>Allergener</item>

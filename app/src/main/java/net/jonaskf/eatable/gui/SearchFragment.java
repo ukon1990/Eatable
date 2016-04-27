@@ -150,10 +150,8 @@ public class SearchFragment extends Fragment {
                                 ((JSONObject) jArr.get(i)).getString("producerID")
                         ) );
                 } catch (JSONException e) {
-                    Log.d("test", result.toString());
                     e.printStackTrace();
                 }
-                //Log.d("test", resultList.get(i).getName()+ " size -> " + resultList.size());
             }
             productSearchResult();
         }
@@ -194,7 +192,6 @@ public class SearchFragment extends Fragment {
             for(int i = 0; i < jArr.length(); i++) {
                 try {
                     Producer.addProducer((JSONObject) jArr.get(i));
-                    Log.d("test", result.toString() + " size - " + Producer.list.size());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -2,6 +2,7 @@ package net.jonaskf.eatable.diet;
 
 import android.util.Log;
 
+import net.jonaskf.eatable.global.Persistence;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
@@ -61,14 +62,7 @@ public class Diet implements Serializable{
                 if(!allTypes.containsKey(type))
                     allTypes.put(type, list.get(key).getType().get(type));
             }
-            Log.d("test", "From diet: " + "-Allergen ->"+list.get(key).getAllergen().size() + " -Source -> " + list.get(key).getSource().size() + " -Type -> " + list.get(key).getType().size());
         }
-
-        //TODO: For debugging
-        Log.d("test", "All allergens: " + allAllergens.size());
-        Log.d("test", "All types: " + allTypes.size());
-        Log.d("test", "All source: " + allSources.size());
-
     }
 
 

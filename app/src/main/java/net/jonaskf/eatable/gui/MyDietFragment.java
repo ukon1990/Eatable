@@ -12,6 +12,7 @@ import android.widget.SearchView;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.DietAdapter;
 import net.jonaskf.eatable.diet.Diet;
+import net.jonaskf.eatable.global.Persistence;
 import net.jonaskf.eatable.global.Vars;
 
 

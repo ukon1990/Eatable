@@ -15,6 +15,7 @@ public class Vars {
     public static final String _ADD_PRODUCT_FRAGMENT = "add product fragment";
     public static final String _MY_DIETS_FRAGMENT = "my diets fragment";
     public static final String _ADD_DIET_FRAGMENT = "add diet fragment";
+    public static final String _ADD_TO_CUSTOM_DIET_FRAGMENT = "add to custom diet fragment";
     public static final String _MAKE_DIET_FRAGMENT = "create diet fragment";
     public static final String _ADD_INGREDIENT_FRAGMENT = "add ingredient fragment";
 
@@ -36,7 +37,7 @@ public class Vars {
     public static final String Q_INSERT = "query_sql=";
 
     //User prefs
-    public static final String PREFS_SAVE_PATH = "myDiet.dat";
+    public static final String PREFS_SAVE_PATH = "myDiets.dat";
     public static final String API_KEY = "546fdgh465gfhj546gfhj453gkh342464ghk3gh4k8jf3ghjk654hj6gk";
 
     //Static colors

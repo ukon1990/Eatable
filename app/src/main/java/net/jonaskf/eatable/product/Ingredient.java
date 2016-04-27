@@ -12,6 +12,7 @@ import java.util.HashMap;
  * Created by jonas on 22.02.2016.
  */
 public class Ingredient {
+    private static final long serialVersionUID = -324168761587654684L;
     private String id;
     private String name;
     private String comment;

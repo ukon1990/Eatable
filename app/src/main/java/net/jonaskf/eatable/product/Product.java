@@ -1,12 +1,7 @@
 package net.jonaskf.eatable.product;
 
-import android.util.Log;
-
-import net.jonaskf.eatable.gui.MainActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 
 /**
@@ -63,15 +58,12 @@ public class Product {
                     new Product(
                         obj.getString("ean"),
                         obj.getString("productName"),
-                        "",//TODO: add in DB -> obj.getString("comment"),
+                        "",
                         ingredients,
                         obj.getString("lastUpdated"),
                         obj.getString("producerID")
                     )
             );
         }catch(JSONException e){e.printStackTrace();}
-    }
-    public static void addProducts(JSONObject obj){
-
     }
 }

@@ -9,6 +9,7 @@
         android:id="@+id/my_diet_frag_explenation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:text="@string/diet_fragment_explenation"
         />
     <ListView

@@ -11,17 +11,18 @@ import android.widget.TextView;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.global.Lists;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.product.Allergen;
+import net.jonaskf.eatable.product.Source;
+import net.jonaskf.eatable.product.Type;
 
 /**
- * Created by jonas on 27.04.2016.
+ * Created by jonas on 27.04.16.
  */
-public class AllergenAdapter  extends ArrayAdapter<Allergen> {
+public class TypeAdapter extends ArrayAdapter<Type> {
     private ImageButton clickedBtn;
-    private Allergen clickedAllergen;
+    private Type clickedType;
 
 
-    public AllergenAdapter (Context context, int resource){
+    public TypeAdapter (Context context, int resource){
         super(context, resource);
     }
 
@@ -40,36 +41,36 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
         TextView nameTW = (TextView) view.findViewById(R.id.diet_row_name);
         //TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
-        final Allergen allergen = getItem(pos);
+        final Type type = getItem(pos);
 
 
 
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItem(allergen, imgBtn);
+                addItem(type, imgBtn);
             }
         });
 
-        btnIcon(allergen, imgBtn);
+        btnIcon(type, imgBtn);
         if(nameTW != null)
-            nameTW.setText(allergen.getAllergen());
+            nameTW.setText(type.getIngredientType());
         return view;
     }
 
-    public void addItem(Allergen allergen, ImageButton imgBtn){
+    public void addItem(Type type, ImageButton imgBtn){
         clickedBtn = imgBtn;
-        clickedAllergen = allergen;
-        if(!Lists.customAllergenList.containsKey(allergen.getId())){
-            Lists.customAllergenList.put(allergen.getId(), allergen);
+        clickedType = type;
+        if(!Lists.customTypeList.containsKey(type.getId())){
+            Lists.customTypeList.put(type.getId(), type);
         }else{
-            Lists.customAllergenList.remove(allergen.getId());
+            Lists.customTypeList.remove(type.getId());
         }
         btnIcon();
     }
 
     private void btnIcon(){
-        if(Lists.customAllergenList.containsKey(clickedAllergen.getId())) {
+        if(Lists.customTypeList.containsKey(clickedType.getId())) {
             clickedBtn.setImageResource(android.R.drawable.ic_menu_delete);
             clickedBtn.setBackgroundColor(Vars.MILD_RED);
         }
@@ -78,8 +79,8 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
             clickedBtn.setBackgroundColor(Vars.MILD_GREEN);
         }
     }
-    private void btnIcon(Allergen allergen, ImageButton imgBtn){
-        if(Lists.customAllergenList.containsKey(allergen.getId())) {
+    private void btnIcon(Type type, ImageButton imgBtn){
+        if(Lists.customTypeList.containsKey(type.getId())) {
             imgBtn.setImageResource(android.R.drawable.ic_menu_delete);
             imgBtn.setBackgroundColor(Vars.MILD_RED);
         }

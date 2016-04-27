@@ -53,33 +53,40 @@ public class Persistence {
             FileInputStream fis = context.openFileInput(Vars.PREFS_SAVE_PATH);
             ObjectInputStream in = new ObjectInputStream(fis);
 
-            Object o = null;
+            Object o;
+            //TODO: EOFException
             while((o = in.readObject()) != null)
                 if(o instanceof Diet)
                     Diet.list.put( ((Diet) o).getId(), (Diet) o );
             Diet.updateLists();
             in.close();
             fis.close();
+            Log.d("persistance", "loaded stuff");
         } catch (FileNotFoundException e) {
             //If the file does not exsist, the user probably have no registered diets.
-            Log.d("test","File not found");
             return false;
         } catch (StreamCorruptedException e) {
+            e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return true;
     }
 
     public static void saveUserPrefs(Context context){
         try {
+            //TODO: Noe feil med lagring? Blir lagret med nulls?
             FileOutputStream fos = context.openFileOutput(Vars.PREFS_SAVE_PATH, Context.MODE_PRIVATE);
             ObjectOutputStream out = new ObjectOutputStream(fos);
             for(String key : Diet.list.keySet()){
                 out.writeObject(Diet.list.get(key));
+                Log.d("persistence", "name: " + Diet.list.get(key).getDiet());
             }
             out.close();
             fos.close();
+            Log.d("persistance", "Saved user prefs");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -10,13 +10,16 @@ import java.util.HashMap;
 public class Type implements Serializable {
     private static final long serialVersionUID = -324168761687654687L;
 
+    private String id;
     private String ingredientType;
     public static HashMap<String, Type> list = new HashMap<>();
 
-    public Type(String ingredientType) {
+    public Type(String id,String ingredientType) {
+        this.id = id;
         this.ingredientType = ingredientType;
     }
 
+    public String getId(){return id;}
     public String getIngredientType() {
         return ingredientType;
     }

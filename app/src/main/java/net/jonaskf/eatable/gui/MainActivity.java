@@ -267,7 +267,6 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
             }
-            Log.d("allergen","Hei -> " + Allergen.list.get("5").getAllergen());
         }
     }
     //Sources
@@ -306,7 +305,9 @@ public class MainActivity extends AppCompatActivity
                 try {
                     Source.list.put(
                             ((JSONObject) jArr.get(i)).getString("sourceID"),
-                            new Source(((JSONObject) jArr.get(i)).getString("source"))
+                            new Source(
+                                    ((JSONObject) jArr.get(i)).getString("sourceID"),
+                                    ((JSONObject) jArr.get(i)).getString("source"))
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -346,15 +347,19 @@ public class MainActivity extends AppCompatActivity
             Type.list.clear();
             //populating
             JSONArray jArr = result;
-            for(int i = 0; i < jArr.length(); i++)
+            for(int i = 0; i < jArr.length(); i++){
                 try {
+                    Log.d("test", result.toString());
                     Type.list.put(
                             ((JSONObject) jArr.get(i)).getString("typeID"),
-                            new Type(((JSONObject) jArr.get(i)).getString("ingredientType"))
+                            new Type(
+                                    ((JSONObject) jArr.get(i)).getString("typeID"),
+                                    ((JSONObject) jArr.get(i)).getString("ingredientType"))
                     );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
         }
     }
     //Diets
@@ -386,7 +391,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         protected void onPostExecute(JSONArray result){
-            Type.list.clear();
+            Diet.list.clear();
             //populating
             JSONArray jArr = result;
             for(int i = 0; i < jArr.length(); i++)
