@@ -1,46 +1,29 @@
-package net.jonaskf.eatable.gui;
+package net.jonaskf.eatable;
 
-import android.os.AsyncTask;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SearchView;
 
-import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.DietAdapter;
-import net.jonaskf.eatable.adapter.ProductAdapter;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.product.Product;
+import net.jonaskf.eatable.gui.AddDietFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
-public class MyDietFragment extends Fragment {
+public class CustomDietFragment extends Fragment {
 
     private View view;
-    private SearchView searchView;
-    private ListView listView;
     private DietAdapter adapter;
-
-    public MyDietFragment() {
+    private ListView listView;
+    public CustomDietFragment() {
         // Required empty public constructor
     }
 

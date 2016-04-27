@@ -109,4 +109,5 @@
     <string name="types">Typer</string>
     <string name="produced_by">Produsert av</string>
     <string name="last_updated">Sist oppdatert</string>
+    <string name="custom_diet">Lag egendefinert diett</string>
 </resources>
