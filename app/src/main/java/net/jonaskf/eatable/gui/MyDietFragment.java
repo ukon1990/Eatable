@@ -1,36 +1,18 @@
 package net.jonaskf.eatable.gui;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.DietAdapter;
-import net.jonaskf.eatable.adapter.ProductAdapter;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.product.Product;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class MyDietFragment extends Fragment {
@@ -68,7 +50,7 @@ public class MyDietFragment extends Fragment {
         view.findViewById(R.id.make_diet_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddDietFragment(), Vars._ADD_DIET_FRAGMENT).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CustomDietFragment(), Vars._MAKE_DIET_FRAGMENT).addToBackStack(null).commit();
             }
         });
         return view;

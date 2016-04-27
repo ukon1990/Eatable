@@ -15,6 +15,7 @@ public class Vars {
     public static final String _ADD_PRODUCT_FRAGMENT = "add product fragment";
     public static final String _MY_DIETS_FRAGMENT = "my diets fragment";
     public static final String _ADD_DIET_FRAGMENT = "add diet fragment";
+    public static final String _MAKE_DIET_FRAGMENT = "create diet fragment";
     public static final String _ADD_INGREDIENT_FRAGMENT = "add ingredient fragment";
 
     //URLs
