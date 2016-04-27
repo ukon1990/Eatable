@@ -257,7 +257,10 @@ public class MainActivity extends AppCompatActivity
                 try {
                     Allergen.list.put(
                             ((JSONObject) jArr.get(i)).getString("allergenid"),
-                            new Allergen(((JSONObject) jArr.get(i)).getString("allergen"))
+                            new Allergen(
+                                    ((JSONObject) jArr.get(i)).getString("allergenid"),
+                                    ((JSONObject) jArr.get(i)).getString("allergen")
+                            )
                     );
                 } catch (JSONException e) {
                     Log.d("allergen", "failed - " + result.toString());
