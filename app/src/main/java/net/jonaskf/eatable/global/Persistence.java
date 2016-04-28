@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.StreamCorruptedException;
 
 /**
@@ -52,7 +53,7 @@ public class Persistence {
         try {
             FileInputStream fis = context.openFileInput(Vars.PREFS_SAVE_PATH);
             ObjectInputStream in = new ObjectInputStream(fis);
-
+            Log.d("test", "Size? " + String.valueOf(in.available()));
             Object o;
             //TODO: EOFException
             while((o = in.readObject()) != null)
@@ -82,7 +83,6 @@ public class Persistence {
             ObjectOutputStream out = new ObjectOutputStream(fos);
             for(String key : Diet.list.keySet()){
                 out.writeObject(Diet.list.get(key));
-                Log.d("persistence", "name: " + Diet.list.get(key).getDiet());
             }
             out.close();
             fos.close();
@@ -94,4 +94,16 @@ public class Persistence {
         }
     }
 
+
+    /**
+     * Save json to file
+     * Json thingy -> http://www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/
+     */
+    public static void saveTxtUserPrefs(){
+        try {
+            PrintWriter out = new PrintWriter(Vars.PREFS_SAVE_PATH);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

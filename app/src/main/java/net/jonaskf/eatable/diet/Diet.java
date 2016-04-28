@@ -1,8 +1,5 @@
 package net.jonaskf.eatable.diet;
 
-import android.util.Log;
-
-import net.jonaskf.eatable.global.Persistence;
 import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
 import net.jonaskf.eatable.product.Type;
