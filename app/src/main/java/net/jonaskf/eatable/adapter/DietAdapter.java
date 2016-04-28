@@ -53,11 +53,8 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
 
         final ImageButton imgBtn = (ImageButton) view.findViewById(R.id.diet_list_row_btn);
         TextView nameTW = (TextView) view.findViewById(R.id.diet_row_name);
-        //TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
         final Diet diet = getItem(pos);
-
-
 
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,18 +69,26 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
         return view;
     }
 
+    /*
+     * A method for adding or removing the item that is clicked
+     */
     public void addItem(Diet diet, ImageButton imgBtn){
         clickedBtn = imgBtn;
         clickedDiet = diet;
-        if(!Diet.list.containsKey(diet.getId())){
-            DownloadDiet dl = new DownloadDiet();
-            dl.execute(Vars.GET_DIETS + Vars.Q_ID + diet.getId());
-        }else{
-            Diet.list.remove(diet.getId());
-        }
+        try{
+            if(!Diet.list.containsKey(diet.getId())){
+                DownloadDiet dl = new DownloadDiet();
+                dl.execute(Vars.GET_DIETS + Vars.Q_ID + diet.getId());
+            }else{
+                Diet.list.remove(diet.getId());
+            }
+        }catch(Exception e){e.printStackTrace();}
         btnIcon();
     }
 
+    /*
+     * A method for changing the icon and color of the imagebutton when clicked
+     */
     private void btnIcon(){
         if(Diet.list.containsKey(clickedDiet.getId())) {
             clickedBtn.setImageResource(android.R.drawable.ic_menu_delete);
@@ -121,7 +126,7 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
                 JSONArray obj = new JSONArray();
                 try {
                     obj= new JSONArray(in.readLine());
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 in.close();

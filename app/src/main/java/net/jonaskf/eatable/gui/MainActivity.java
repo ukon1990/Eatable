@@ -78,16 +78,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*
-         * Checking for actions from the widget if it were used to init the mainactivity
-         */
-        if(EatableWidget.widget_action.equals(Vars._SCAN_PRODUCT)){
-            //Starting the barcode scan
-            intentIntegrator.setOrientationLocked(true).initiateScan();
-        }else if(EatableWidget.widget_action.equals(Vars._SCAN_PRODUCT)){
-            //Starting the search fragment (incase the app already is in some other fragment)
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
-        }
+
 
         /**
          * Adding ingredientsTypes, Allergens and product sources.
@@ -96,6 +87,16 @@ public class MainActivity extends AppCompatActivity
         getAllSources();
         getAllTypes();
 
+        /*
+         * Checking for actions from the widget if it were used to init the mainactivity
+         */
+        if(EatableWidget.widget_action.equals(Vars._SCAN_PRODUCT)){
+            //Starting the barcode scan
+            intentIntegrator.setOrientationLocked(true).initiateScan();
+        }else if(EatableWidget.widget_action.equals(Vars._SEARCH_FRAGMENT)){
+            //Starting the search fragment (incase the app already is in some other fragment)
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
+        }
     }
 
     public void scanProduct(View view){

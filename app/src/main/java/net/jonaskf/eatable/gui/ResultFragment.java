@@ -290,8 +290,9 @@ public class ResultFragment extends Fragment {
                 //String obj ="";
                 JSONObject obj = new JSONObject();
                 try {
-                    //Storing directly into JSONObject as we know that the API only returns 1 object for this query
-                    obj= new JSONObject(in.readLine());
+                    String output;
+                    while((output = in.readLine()) != null)
+                        obj= new JSONObject(output);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

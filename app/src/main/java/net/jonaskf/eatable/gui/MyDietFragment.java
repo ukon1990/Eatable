@@ -19,7 +19,6 @@ import net.jonaskf.eatable.global.Vars;
 public class MyDietFragment extends Fragment {
 
     private View view;
-    private SearchView searchView;
     private ListView listView;
     private DietAdapter adapter;
 
