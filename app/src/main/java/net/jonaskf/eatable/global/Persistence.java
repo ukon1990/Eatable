@@ -40,7 +40,6 @@ public class Persistence {
             ObjectInputStream in = new ObjectInputStream(fis);
             Log.d("test", "Size? " + String.valueOf(in.available()));
             Object o;
-            //TODO: EOFException
             while((o = in.readObject()) != null)
                 if(o instanceof Diet)
                     Diet.list.put( ((Diet) o).getId(), (Diet) o );

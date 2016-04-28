@@ -49,13 +49,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    /**
-     * GetAllergens.php - http://frigg.hiof.no/android_v165/GetAllergens.php
-     * GetSoruces.php - http://frigg.hiof.no/android_v165/GetSources.php
-     * GetTypes.php - http://frigg.hiof.no/android_v165/GetTypes.php
-     *
-     * Barcode generator: https://www.gs1.ch/en/gs1-system/the-gs1-system/helpful-tool/check-digit-calculator-ean-13-barcode-generator
-     */
+
     private IntentIntegrator intentIntegrator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +82,11 @@ public class MainActivity extends AppCompatActivity
          * Checking for actions from the widget if it were used to init the mainactivity
          */
         if(EatableWidget.widget_action.equals(Vars._SCAN_PRODUCT)){
+            //Starting the barcode scan
             intentIntegrator.setOrientationLocked(true).initiateScan();
+        }else if(EatableWidget.widget_action.equals(Vars._SCAN_PRODUCT)){
+            //Starting the search fragment (incase the app already is in some other fragment)
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
         }
 
         /**
@@ -127,8 +125,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStop(){
         super.onStop();
+        //Saving user prefs anytime the users screen goes black or the user "moves" the app to the background
         Persistence.saveUserPrefs(this);
-        //Persistence.saveTxtUserPrefs(this);
     }
 
 
@@ -192,10 +190,8 @@ public class MainActivity extends AppCompatActivity
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
-                //TODO: Add feilmelding
                 Log.d("Cancelled from fragment", "Cancelled from fragment");
             } else {
-                //TODO: Add try catch
                 Vars.ean = result.getContents();
                 Log.d("onActivityResult", Vars.ean);
                 try{
