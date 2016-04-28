@@ -130,7 +130,7 @@ public class AddProductFragment extends Fragment {
             URLConnection uConn;
             try{
                 String reply ="";
-                String date = new SimpleDateFormat("dd/MM-yy").format(Calendar.getInstance().getTime());
+                String date = new SimpleDateFormat("dd/MM-yy").format(Calendar.getInstance().getTime());//Date for the
                 String producerID = "1";//TODO -> Allow the user to select!
                 Log.d("test", "Date: "+date);
                 /**

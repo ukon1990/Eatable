@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity
         getAllAllergens();
         getAllSources();
         getAllTypes();
-        getAllDietsList();
 
     }
 
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity
     }
     public void loadUserPrefs(){
         //Loading user prefs if they exsist, if not opening the my diets window.
-        Persistence.loadTxtUserPrefs(this);
         if(!Persistence.loadUserPrefs(this))
             new AlertDialog.Builder(this)
                     .setTitle(R.string.new_user_title)//R.string.product_does_not_exist_title)
@@ -123,7 +121,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop(){
         super.onStop();
         Persistence.saveUserPrefs(this);
-        Persistence.saveTxtUserPrefs(this);
+        //Persistence.saveTxtUserPrefs(this);
     }
 
 
@@ -217,10 +215,6 @@ public class MainActivity extends AppCompatActivity
     public void getAllTypes(){
         DownloadTypes dl = new DownloadTypes();
         dl.execute(Vars.GET_TYPES);
-    }
-    public void getAllDietsList(){
-        DownloadDiets dl = new DownloadDiets();
-        dl.execute(Vars.GET_DIETS);
     }
 
     //Allergens
@@ -362,49 +356,6 @@ public class MainActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
             }
-        }
-    }
-    //Diets
-    private class DownloadDiets extends AsyncTask<String, Integer, JSONArray> {
-        @Override
-        protected JSONArray doInBackground(String... urls) {
-            URLConnection uConn;
-            try{
-                //Getting that data
-                URL url = new URL(urls[0]);
-                uConn = url.openConnection();
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(uConn.getInputStream(), "UTF-8")
-                );
-
-                JSONArray obj = new JSONArray();
-                try {
-                    obj= new JSONArray(in.readLine());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                in.close();
-                return obj;
-            }catch(IOException ex){
-                ex.printStackTrace();
-                Log.d("Download", "Failed! :(");
-            }
-            return null;
-        }
-
-        protected void onPostExecute(JSONArray result){
-            Diet.list.clear();
-            //populating
-            JSONArray jArr = result;
-            for(int i = 0; i < jArr.length(); i++)
-                try {
-                    Lists.dietList.put(
-                            ((JSONObject) jArr.get(i)).getString("dietID"),
-                            ((JSONObject) jArr.get(i)).getString("diet")
-                    );
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
         }
     }
 }
