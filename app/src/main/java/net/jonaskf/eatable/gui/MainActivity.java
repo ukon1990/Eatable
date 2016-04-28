@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void loadUserPrefs(){
         //Loading user prefs if they exsist, if not opening the my diets window.
+        Persistence.loadTxtUserPrefs(this);
         if(!Persistence.loadUserPrefs(this))
             new AlertDialog.Builder(this)
                     .setTitle(R.string.new_user_title)//R.string.product_does_not_exist_title)
@@ -122,6 +123,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop(){
         super.onStop();
         Persistence.saveUserPrefs(this);
+        Persistence.saveTxtUserPrefs(this);
     }
 
 

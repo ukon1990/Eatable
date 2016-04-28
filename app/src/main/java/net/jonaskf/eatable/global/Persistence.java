@@ -8,12 +8,20 @@ import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.gui.MyDietFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StreamCorruptedException;
 
@@ -99,11 +107,47 @@ public class Persistence {
      * Save json to file
      * Json thingy -> http://www.mkyong.com/java/jackson-2-convert-java-object-to-from-json/
      */
-    public static void saveTxtUserPrefs(){
+    public static void saveTxtUserPrefs(Context context){
         try {
-            PrintWriter out = new PrintWriter(Vars.PREFS_SAVE_PATH);
+            JSONObject obj = new JSONObject();
+            BufferedWriter file = new BufferedWriter(new OutputStreamWriter(context.openFileOutput(Vars.PREFS_SAVE_PATH, Context.MODE_PRIVATE)));//, "UTF-8" ?
+            //FileWriter file = new FileWriter(settings.GeneralSettings.settingsPath);
+            obj.put("Dildo", "Ostepop");
+            file.write(obj.toString());
+            file.flush();
+            file.close();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    public static void loadTxtUserPrefs(Context context){
+        BufferedReader br;
+        String object = "";
+
+        try{
+            br = new BufferedReader(new InputStreamReader(context.openFileInput(Vars.PREFS_SAVE_PATH)));//, "UTF-8"
+            while( (object = br.readLine()) != null ){
+                try{
+                    //Storing it somewhere
+                    System.out.println("Read from file: " + object);
+
+                }catch(Exception e){
+                }
+                //System.out.println("Item added" + object);
+
+                //readLength += object.length();
+                //gui.MainFrame.progressBar.setValue((int) Math.round(lengthPerPercent * readLength));
+            }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
