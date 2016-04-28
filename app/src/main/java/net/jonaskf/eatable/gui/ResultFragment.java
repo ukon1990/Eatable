@@ -119,7 +119,7 @@ public class ResultFragment extends Fragment {
 
             if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID)) {
                 allergens.put(allergenID, Allergen.list.get(allergenID).getAllergen());
-                badStuff += Allergen.list.get(allergenID).getAllergen();
+                badStuff += badStuff.length() > 0 ? ", " + Allergen.list.get(allergenID).getAllergen() : Allergen.list.get(allergenID).getAllergen();
                 isEatableIngredient = false;
             }
             else if(!allergenID.equals("0") && Diet.allAllergens.containsKey(allergenID) && isEatableIngredient)
@@ -142,7 +142,7 @@ public class ResultFragment extends Fragment {
             String sourceID = Product.list.get(ean).getIngredients().get(key).getSourceID();
             if(Diet.allSources.containsKey(sourceID) && !sources.containsKey(sourceID)) {
                 sources.put(sourceID, Source.list.get(sourceID).getSource());
-                badStuff += Source.list.get(sourceID).getSource();
+                badStuff += badStuff.length() > 0 ? ", " + Source.list.get(sourceID).getSource() : Source.list.get(sourceID).getSource();
                 isEatableIngredient = false;
             }
             else if(Diet.allSources.containsKey(allergenID) && isEatableIngredient)
@@ -162,7 +162,7 @@ public class ResultFragment extends Fragment {
             String typeID = Product.list.get(ean).getIngredients().get(key).getTypeID();
             if(Diet.allTypes.containsKey(typeID) && !sources.containsKey(typeID)) {
                 types.put(typeID, Type.list.get(typeID).getIngredientType());
-                badStuff += Type.list.get(typeID).getIngredientType();
+                badStuff += badStuff.length() > 0 ? ", " + Type.list.get(typeID).getIngredientType() : Type.list.get(typeID).getIngredientType();
                 isEatableIngredient = false;
             }
             else if(Diet.allTypes.containsKey(typeID) && isEatableIngredient)
@@ -212,6 +212,7 @@ public class ResultFragment extends Fragment {
             }
             allergens.clear();
         }
+        //Building source string
         if(sources.size() != 0){
             allergenText += "<br />" + "<strong>" + getString(R.string.sources) + "</strong>: ";
             int c = sources.size();
@@ -228,14 +229,15 @@ public class ResultFragment extends Fragment {
                 }
             }
             sources.clear();
-        }//TODO: Fix a bug that causes the first element not to show in the list!
+        }
+        //Building types string
         if(types.size() != 0){
             allergenText += "<br />" + "<strong>" + getString(R.string.types) + "</strong>: ";
             int c = types.size();
             Log.d("d", "types -> " + types.size());
             for(String a : types.keySet()){
                 if(types.size() > 0){
-                    if(c == sources.size()){
+                    if(c == types.size()){
                         allergenText += types.get(a).toUpperCase().substring(0,1) + types.get(a).substring(1) + (c == 1 ? ".":"");
                     }else if(c == 1){
                         allergenText += " og " + types.get(a) + ".";
@@ -249,12 +251,9 @@ public class ResultFragment extends Fragment {
         }
         //Setting text label & actionbar content
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(Product.list.get(ean).getName());
-        String start = "<![CDATA[";
-        String end ="]]>";
-
-
 
         producer.setText(
+                //Setting the producer name to always begin with an uppercase letter
                 Html.fromHtml(
                         "<strong>" + getString(R.string.produced_by) + "</strong>: " +
                         Producer.list.get(Product.list.get(ean).getProducerID()).getName().toUpperCase().substring(0,1) +
@@ -269,11 +268,6 @@ public class ResultFragment extends Fragment {
             eatableIcon.setImageResource(R.drawable.iseatable);
         else
             eatableIcon.setImageResource(R.drawable.uneatable);
-    }
-
-    private String fixGrammar(String[] text){
-        String result ="";
-        return result;
     }
 
     //Async to allow download on a thread other than main thread
@@ -296,13 +290,8 @@ public class ResultFragment extends Fragment {
                 //String obj ="";
                 JSONObject obj = new JSONObject();
                 try {
-                    String line;
-                    //Log.d("Download", "Read: " + in.read() + " contets: " + in.readLine());
-                    //TODO: Løs uten bruk av string om mulig (For veldig store lister)
-                    while((line = in.readLine()) != null)
-                        obj= new JSONObject(line);
-
-                    Log.d("Download", "Not failed");
+                    //Storing directly into JSONObject as we know that the API only returns 1 object for this query
+                    obj= new JSONObject(in.readLine());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

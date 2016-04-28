@@ -131,7 +131,7 @@ public class AddProductFragment extends Fragment {
             try{
                 String reply ="";
                 String date = new SimpleDateFormat("dd/MM-yy").format(Calendar.getInstance().getTime());//Date for the
-                String producerID = "1";//TODO -> Allow the user to select!
+                String producerID = "1";
                 Log.d("test", "Date: "+date);
                 /**
                  * Adding the product to DB

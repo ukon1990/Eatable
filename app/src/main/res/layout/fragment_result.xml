@@ -28,14 +28,6 @@
         android:text="@string/conflicts_title"
         android:layout_below="@id/producer_nametag"
         android:textSize="@dimen/abc_text_size_large_material"/>
-    <TextView
-        android:id="@+id/product_acceptance"
-        android:layout_below="@id/allergic_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="10"
-        android:layout_marginLeft="10dp"
-        android:text="@string/allergic_result"/>
     <ImageView
         android:id="@+id/is_eatable_icon"
         android:layout_width="wrap_content"
@@ -44,6 +36,16 @@
         android:src="@drawable/iseatable"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/product_acceptance"
+        android:layout_below="@id/allergic_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/is_eatable_icon"
+        android:layout_alignParentLeft="true"
+        android:maxLines="10"
+        android:layout_marginLeft="10dp"
+        android:text="@string/allergic_result"/>
     <TextView
         android:id="@+id/ingredient_title_textview"
         android:layout_below="@id/product_acceptance"

@@ -61,7 +61,6 @@ public class Persistence {
 
     public static void saveUserPrefs(Context context){
         try {
-            //TODO: Noe feil med lagring? Blir lagret med nulls?
             FileOutputStream fos = context.openFileOutput(Vars.PREFS_SAVE_PATH, Context.MODE_PRIVATE);
             ObjectOutputStream out = new ObjectOutputStream(fos);
             for(String key : Diet.list.keySet()){
