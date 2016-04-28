@@ -11,7 +11,6 @@ import android.widget.TextView;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.global.Lists;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.product.Allergen;
 import net.jonaskf.eatable.product.Source;
 
 /**
@@ -33,7 +32,7 @@ public class SourceAdapter extends ArrayAdapter<Source> {
 
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
-            view = viewInflater.inflate(R.layout.diet_list_row, null);
+            view = viewInflater.inflate(R.layout.list_row, null);
 
         }
 

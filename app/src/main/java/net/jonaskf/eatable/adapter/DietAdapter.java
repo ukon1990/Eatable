@@ -1,7 +1,6 @@
 package net.jonaskf.eatable.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +47,7 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
 
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
-            view = viewInflater.inflate(R.layout.diet_list_row, null);
+            view = viewInflater.inflate(R.layout.list_row, null);
 
         }
 

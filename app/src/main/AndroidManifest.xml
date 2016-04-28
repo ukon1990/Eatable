@@ -31,6 +31,8 @@
         <receiver android:name=".EatableWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.OPEN_APP"/>
+                <action android:name="android.appwidget.action.SCAN_PROD"/>
             </intent-filter>
 
             <meta-data

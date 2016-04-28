@@ -7,9 +7,10 @@ import android.graphics.Color;
  */
 public class Vars {
     //Ean
-    public static String ean = "2";//TODO: Sett til tom
+    public static String ean = "";
 
     //Fragment tags
+    public static final String _SCAN_PRODUCT = "scan product";
     public static final String _SEARCH_FRAGMENT = "search fragment";
     public static final String _RESULT_FRAGMENT = "result fragment";
     public static final String _ADD_PRODUCT_FRAGMENT = "add product fragment";

@@ -11,15 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import net.jonaskf.eatable.AddToCustomDietFragment;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.AllergenAdapter;
-import net.jonaskf.eatable.adapter.DietAdapter;
 import net.jonaskf.eatable.adapter.SourceAdapter;
 import net.jonaskf.eatable.adapter.TypeAdapter;
 import net.jonaskf.eatable.diet.Diet;

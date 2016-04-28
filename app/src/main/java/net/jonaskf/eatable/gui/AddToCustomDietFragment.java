@@ -1,4 +1,4 @@
-package net.jonaskf.eatable;
+package net.jonaskf.eatable.gui;
 
 
 import android.os.AsyncTask;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
+import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.AllergenAdapter;
 import net.jonaskf.eatable.adapter.SourceAdapter;
 import net.jonaskf.eatable.adapter.TypeAdapter;
@@ -53,7 +54,6 @@ public class AddToCustomDietFragment extends Fragment {
     private List<Type> types = new ArrayList<>();
 
     public AddToCustomDietFragment() {
-        // Required empty public constructor
     }
 
 

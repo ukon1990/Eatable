@@ -117,8 +117,6 @@ public class ResultFragment extends Fragment {
             //Building list of found allergens in this product if it is something the user can't eat.
             String allergenID = Product.list.get(ean).getIngredients().get(key).getAllergenID();
 
-            Log.d("allergen","The size is: " + Allergen.list.size());
-
             if(Diet.allAllergens.containsKey(allergenID) && !allergens.containsKey(allergenID)) {
                 allergens.put(allergenID, Allergen.list.get(allergenID).getAllergen());
                 badStuff += Allergen.list.get(allergenID).getAllergen();
@@ -230,12 +228,13 @@ public class ResultFragment extends Fragment {
                 }
             }
             sources.clear();
-        }
+        }//TODO: Fix a bug that causes the first element not to show in the list!
         if(types.size() != 0){
             allergenText += "<br />" + "<strong>" + getString(R.string.types) + "</strong>: ";
             int c = types.size();
+            Log.d("d", "types -> " + types.size());
             for(String a : types.keySet()){
-                if(sources.size() > 0){
+                if(types.size() > 0){
                     if(c == sources.size()){
                         allergenText += types.get(a).toUpperCase().substring(0,1) + types.get(a).substring(1) + (c == 1 ? ".":"");
                     }else if(c == 1){

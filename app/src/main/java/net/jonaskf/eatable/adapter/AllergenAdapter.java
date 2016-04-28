@@ -32,7 +32,7 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
 
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
-            view = viewInflater.inflate(R.layout.diet_list_row, null);
+            view = viewInflater.inflate(R.layout.list_row, null);
 
         }
 

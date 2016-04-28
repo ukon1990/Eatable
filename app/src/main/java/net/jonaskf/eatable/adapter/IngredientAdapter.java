@@ -11,9 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import net.jonaskf.eatable.R;
-import net.jonaskf.eatable.diet.Diet;
 import net.jonaskf.eatable.global.Vars;
-import net.jonaskf.eatable.gui.AddIngredientFragment;
 import net.jonaskf.eatable.product.Ingredient;
 
 import org.json.JSONArray;
@@ -44,7 +42,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
 
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
-            view = viewInflater.inflate(R.layout.diet_list_row, null);
+            view = viewInflater.inflate(R.layout.list_row, null);
 
         }
 

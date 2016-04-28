@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import net.jonaskf.eatable.EatableWidget;
 import net.jonaskf.eatable.R;
 import net.jonaskf.eatable.adapter.ProductAdapter;
 import net.jonaskf.eatable.diet.Diet;
@@ -83,6 +84,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /*
+         * Checking for actions from the widget if it were used to init the mainactivity
+         */
+        if(EatableWidget.widget_action.equals(Vars._SCAN_PRODUCT)){
+            intentIntegrator.setOrientationLocked(true).initiateScan();
+        }
 
         /**
          * Adding ingredientsTypes, Allergens and product sources.
