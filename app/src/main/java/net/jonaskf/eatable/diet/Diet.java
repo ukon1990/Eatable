@@ -39,6 +39,11 @@ public class Diet implements Serializable{
         this.allergen = allergen;
     }
 
+    /*
+     * Updating the individual lists for the users sources, types and allergens.
+     * This so that we can just check if an object exist in the users diet or not
+     * without having to iterate through all the users diets.
+     */
     public static void updateLists(){
         allAllergens.clear();
         allSources.clear();

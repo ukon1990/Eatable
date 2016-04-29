@@ -59,7 +59,6 @@ public class SearchFragment extends Fragment {
         //Search
         searchView = (SearchView) view.findViewById(R.id.product_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-
             @Override
             public boolean onQueryTextSubmit(String query) {
                 productSearch(query);

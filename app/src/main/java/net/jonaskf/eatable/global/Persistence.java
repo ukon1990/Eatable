@@ -38,7 +38,6 @@ public class Persistence {
         try {
             FileInputStream fis = context.openFileInput(Vars.PREFS_SAVE_PATH);
             ObjectInputStream in = new ObjectInputStream(fis);
-            Log.d("test", "Size? " + String.valueOf(in.available()));
             Object o;
             while((o = in.readObject()) != null)
                 if(o instanceof Diet)

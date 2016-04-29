@@ -59,7 +59,6 @@ public class EatableWidget extends AppWidgetProvider {
             //Starting MainActivity
             context.startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
-
     }
 
     @Override

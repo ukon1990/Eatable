@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity
             //Starting the search fragment (incase the app already is in some other fragment)
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
         }
+        //Clearing the widget action value
+        EatableWidget.widget_action = "";
     }
 
     public void scanProduct(View view){
