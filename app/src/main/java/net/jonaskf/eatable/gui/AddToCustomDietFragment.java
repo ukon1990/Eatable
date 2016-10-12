@@ -42,7 +42,6 @@ import java.util.List;
 public class AddToCustomDietFragment extends Fragment {
 
     private View view;
-    private Spinner spinner;
     private ListView listView;
     private SourceAdapter sourceAdapter;
     private AllergenAdapter allergenAdapter;
@@ -121,25 +120,25 @@ public class AddToCustomDietFragment extends Fragment {
         dl.execute(Vars.GET_TYPES + Vars.Q_SEARCH + query);
     }
 
-
     //Populating the list
     private void listAllergens(){
         allergenAdapter = new AllergenAdapter(getActivity(), android.R.layout.simple_list_item_1);
         listView.setAdapter(allergenAdapter);
         allergenAdapter.addAll(allergens);
     }
+
     private void listSources(){
         sourceAdapter = new SourceAdapter(getActivity(), android.R.layout.simple_list_item_1);
 
         listView.setAdapter(sourceAdapter);
         sourceAdapter.addAll(sources);
     }
+
     private void listTypes(){
         typeAdapter = new TypeAdapter(getActivity(), android.R.layout.simple_list_item_1);
         listView.setAdapter(typeAdapter);
         typeAdapter.addAll(types);
     }
-
 
     //Allergens
     private class DownloadAllergen extends AsyncTask<String, Integer, JSONArray> {

@@ -34,7 +34,6 @@ public class Persistence {
      * Diet saving and loading class
      */
     public static boolean loadUserPrefs(Context context){
-        //SharedPreferences settings = getSharedPreferences(Vars.MY_DIET_PREFS, 0);
         try {
             FileInputStream fis = context.openFileInput(Vars.PREFS_SAVE_PATH);
             ObjectInputStream in = new ObjectInputStream(fis);

@@ -39,11 +39,9 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     public View getView(final int pos, View convertView, ViewGroup parent){
         View view = convertView;
 
-
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
             view = viewInflater.inflate(R.layout.list_row, null);
-
         }
 
         final ImageButton imgBtn = (ImageButton) view.findViewById(R.id.diet_list_row_btn);
@@ -99,7 +97,6 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
             imgBtn.setBackgroundColor(Vars.MILD_GREEN);
         }
     }
-
 
     private class DownloadIngredient extends AsyncTask<String, Integer, JSONArray> {
         @Override

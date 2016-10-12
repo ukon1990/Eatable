@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         //Starting the scan page fragment
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SearchFragment(), Vars._SEARCH_FRAGMENT).commit();
         //Loading user prefs
@@ -77,8 +75,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
         /**
          * Adding ingredientsTypes, Allergens and product sources.
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         //Loading user prefs if they exsist, if not opening the my diets window.
         if(!Persistence.loadUserPrefs(this))
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.new_user_title)//R.string.product_does_not_exist_title)
+                    .setTitle(R.string.new_user_title)
                     .setMessage(R.string.welcome_message)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int which){
@@ -131,7 +127,6 @@ public class MainActivity extends AppCompatActivity
         //Saving user prefs anytime the users screen goes black or the user "moves" the app to the background
         Persistence.saveUserPrefs(this);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -170,9 +165,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
-        //LayoutInflater lf = getAppCompatActivity().getLayoutInflater();
-
         int id = item.getItemId();
 
         if (id == R.id.nav_scan) {
@@ -271,6 +263,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
     //Sources
     private class DownloadSources extends AsyncTask<String, Integer, JSONArray> {
         @Override

@@ -39,9 +39,11 @@ public class Product {
     public String getComment() {
         return comment;
     }
+
     public String getLastUpdated(){
         return lastUpdated;
     }
+
     public String getProducerID(){
         return producerID;
     }

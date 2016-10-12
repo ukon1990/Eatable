@@ -20,7 +20,6 @@ public class TypeAdapter extends ArrayAdapter<Type> {
     private ImageButton clickedBtn;
     private Type clickedType;
 
-
     public TypeAdapter (Context context, int resource){
         super(context, resource);
     }
@@ -29,20 +28,15 @@ public class TypeAdapter extends ArrayAdapter<Type> {
     public View getView(final int pos, View convertView, ViewGroup parent){
         View view = convertView;
 
-
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
             view = viewInflater.inflate(R.layout.list_row, null);
-
         }
 
         final ImageButton imgBtn = (ImageButton) view.findViewById(R.id.diet_list_row_btn);
         TextView nameTW = (TextView) view.findViewById(R.id.diet_row_name);
-        //TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
         final Type type = getItem(pos);
-
-
 
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override

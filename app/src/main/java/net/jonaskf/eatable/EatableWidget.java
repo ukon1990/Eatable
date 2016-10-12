@@ -5,8 +5,6 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import net.jonaskf.eatable.global.Vars;
@@ -25,7 +23,6 @@ public class EatableWidget extends AppWidgetProvider {
     public void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.eatable_widget);
         //views.setTextViewText(R.id.appwidget_text, widgetText);

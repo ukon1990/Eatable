@@ -40,7 +40,6 @@ import java.util.Calendar;
 
 public class AddProductFragment extends Fragment {
     private View view;
-    private SearchView searchView;
     private ListView listView;
     private IngredientAdapter adapter;
     private Button addIngredient;
@@ -173,7 +172,7 @@ public class AddProductFragment extends Fragment {
 
         protected void onPostExecute(String reply){
             new AlertDialog.Builder(getContext())
-                    .setTitle(Vars.ean)//R.string.product_does_not_exist_title)
+                    .setTitle(Vars.ean)
                     .setMessage(reply)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int which){

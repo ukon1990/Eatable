@@ -20,7 +20,6 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
     private ImageButton clickedBtn;
     private Allergen clickedAllergen;
 
-
     public AllergenAdapter (Context context, int resource){
         super(context, resource);
     }
@@ -38,11 +37,8 @@ public class AllergenAdapter  extends ArrayAdapter<Allergen> {
 
         final ImageButton imgBtn = (ImageButton) view.findViewById(R.id.diet_list_row_btn);
         TextView nameTW = (TextView) view.findViewById(R.id.diet_row_name);
-        //TextView companyTW = (TextView) view.findViewById(R.id.company_row_name);
 
         final Allergen allergen = getItem(pos);
-
-
 
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -35,7 +35,6 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
     private ImageButton clickedBtn;
     private Diet clickedDiet;
 
-
     public DietAdapter (Context context, int resource){
         super(context, resource);
     }
@@ -44,11 +43,9 @@ public class DietAdapter  extends ArrayAdapter<Diet> {
     public View getView(final int pos, View convertView, ViewGroup parent){
         View view = convertView;
 
-
         if(view == null){
             LayoutInflater viewInflater = LayoutInflater.from(getContext());
             view = viewInflater.inflate(R.layout.list_row, null);
-
         }
 
         final ImageButton imgBtn = (ImageButton) view.findViewById(R.id.diet_list_row_btn);

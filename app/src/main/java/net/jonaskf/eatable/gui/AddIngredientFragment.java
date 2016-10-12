@@ -44,7 +44,6 @@ public class AddIngredientFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,7 +67,6 @@ public class AddIngredientFragment extends Fragment {
                 return false;
             }
         });
-
 
         //The list
         listView = (ListView) view.findViewById(R.id.ingredient_search_list);
@@ -143,5 +141,4 @@ public class AddIngredientFragment extends Fragment {
             dietSearchResult();
         }
     }
-
 }

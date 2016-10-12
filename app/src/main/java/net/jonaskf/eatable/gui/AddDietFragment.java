@@ -72,7 +72,6 @@ public class AddDietFragment extends Fragment {
             }
         });
 
-
         //The list
         listView = (ListView) view.findViewById(R.id.diet_search_list);
 

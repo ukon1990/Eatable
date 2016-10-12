@@ -46,7 +46,6 @@ public class CustomDietFragment extends Fragment{
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -134,7 +133,6 @@ public class CustomDietFragment extends Fragment{
 
         return view;
     }
-
 
     private void showAllergens(){
         allergenAdapter = new AllergenAdapter(getActivity(), android.R.layout.simple_list_item_1);

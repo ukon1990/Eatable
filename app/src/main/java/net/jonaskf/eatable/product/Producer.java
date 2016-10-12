@@ -21,8 +21,7 @@ public class Producer {
 
     public String getID(){return id;}
     public String getName(){return name;}
-
-
+    
     public static void addProducer(JSONObject obj){
         try{
             list.put(

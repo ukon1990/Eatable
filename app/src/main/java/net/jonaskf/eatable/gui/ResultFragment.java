@@ -93,8 +93,6 @@ public class ResultFragment extends Fragment {
         boolean isEatable = true;
         String ean = Vars.ean;
         String allergenText = "";
-        String sourceText = "";
-        String typeText = "";
         String ingredientText ="";
         HashMap<String, String> allergens = new HashMap<>();
         HashMap<String, String> sources = new HashMap<>();
@@ -287,7 +285,6 @@ public class ResultFragment extends Fragment {
                 );
 
                 //Setting result variable
-                //String obj ="";
                 JSONObject obj = new JSONObject();
                 try {
                     String output;
